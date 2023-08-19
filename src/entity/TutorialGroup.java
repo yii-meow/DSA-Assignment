@@ -11,9 +11,16 @@ package entity;
 public class TutorialGroup {
 
     private int groupNumber;
-    private int numberOfStudent;
+    private int numberOfStudents;
     private int yearOfStudy;
     private int semesterOfStudy;
+
+    public TutorialGroup(int groupNumber, int numberOfStudents, int yearOfStudy, int semesterOfStudy) {
+        this.groupNumber = groupNumber;
+        this.numberOfStudents = numberOfStudents;
+        this.yearOfStudy = yearOfStudy;
+        this.semesterOfStudy = semesterOfStudy;
+    }
 
     public int getGroupNumber() {
         return groupNumber;
@@ -23,12 +30,12 @@ public class TutorialGroup {
         this.groupNumber = groupNumber;
     }
 
-    public int getNumberOfStudent() {
-        return numberOfStudent;
+    public int getNumberOfStudents() {
+        return numberOfStudents;
     }
 
-    public void setNumberOfStudent(int numberOfStudent) {
-        this.numberOfStudent = numberOfStudent;
+    public void setNumberOfStudents(int numberOfStudents) {
+        this.numberOfStudents = numberOfStudents;
     }
 
     public int getYearOfStudy() {
@@ -49,8 +56,8 @@ public class TutorialGroup {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 89 * hash + this.groupNumber;
+        int hash = 5;
+        hash = 37 * hash + this.groupNumber;
         return hash;
     }
 
@@ -71,7 +78,7 @@ public class TutorialGroup {
 
     @Override
     public String toString() {
-        return "TutorialGroup{" + "groupNumber=" + groupNumber + ", numberOfStudent=" + numberOfStudent + ", yearOfStudy=" + yearOfStudy + ", semesterOfStudy=" + semesterOfStudy + '}';
+        return "TutorialGroup{" + "groupNumber=" + groupNumber + ", numberOfStudents=" + numberOfStudents + ", yearOfStudy=" + yearOfStudy + ", semesterOfStudy=" + semesterOfStudy + '}';
     }
 
 }

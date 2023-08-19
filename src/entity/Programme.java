@@ -28,6 +28,18 @@ public class Programme {
     private TutorialGroup tutorialGroup;
     private String description;
 
+    public Programme(String programmeCode, String programmeName, LevelOfStudy programmeLevel, String department, int duration, String intake, double fee, TutorialGroup tutorialGroup, String description) {
+        this.programmeCode = programmeCode;
+        this.programmeName = programmeName;
+        this.programmeLevel = programmeLevel;
+        this.department = department;
+        this.duration = duration;
+        this.intake = intake;
+        this.fee = fee;
+        this.tutorialGroup = tutorialGroup;
+        this.description = description;
+    }
+
     public String getProgrammeCode() {
         return programmeCode;
     }
