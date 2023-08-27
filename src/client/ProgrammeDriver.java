@@ -13,5 +13,10 @@ import entity.Programme;
  * @author yikso
  */
 public class ProgrammeDriver {
-    ListInterface<Programme> programme = new DoubleLinkedList<>();
+
+    public static void main(String[] args) {
+        ListInterface<Programme> programme = new DoubleLinkedList<>();
+        programme.add(new Programme(""));
+    }
+
 }
