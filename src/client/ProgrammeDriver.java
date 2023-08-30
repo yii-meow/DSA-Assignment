@@ -39,12 +39,9 @@ public class ProgrammeDriver {
             System.out.println("7. Remove a tutorial group from a programme");
             System.out.println("8. List all tutorial groups from a programme");
             System.out.println("9. Generate relevant reports\n");
-
             System.out.print("Choice: ");
 
             String option = scanner.nextLine();
-//            scanner.next();
-
             System.out.println("\n");
 
             try {
@@ -90,66 +87,83 @@ public class ProgrammeDriver {
 
         System.out.println("\nQuiting...\nThank you for using this system.");
         scanner.close();
-
     }
 
     private static void addProgramme() {
-//        programme.add(
-//                new Programme(
-//                        "RSD",
-//                        "Bachelor Degree in Software Engineering",
-//                        Programme.LevelOfStudy.BACHELOR_DEGREE,
-//                        "FOCS",
-//                        24,
-//                        "2023-06",
-//                        20000,
-//                        new TutorialGroup(
-//                                1,
-//                                24,
-//                                1,
-//                                1
-//                        ),
-//                        "Information Technology"
-//                ));
+        // Temporary dummy data
+        programme.add(
+                new Programme(
+                        "RSD",
+                        "Bachelor in Software System Development",
+                        Programme.LevelOfStudy.BACHELOR_DEGREE,
+                        "FOCS",
+                        36,
+                        "2023-06",
+                        20000,
+                        new TutorialGroup(
+                                1,
+                                24,
+                                1,
+                                1
+                        ),
+                        "Software Engineering"
+                ));
 
-        System.out.println("------------------\nAdd Programme Form\n------------------");
-        System.out.print("Programme Code: ");
-        int programmeCode = scanner.nextInt();
+        programme.add(
+                new Programme(
+                        "DFT",
+                        "Diploma in Information Technology",
+                        Programme.LevelOfStudy.DIPLOMA,
+                        "FOCS",
+                        24,
+                        "2023-06",
+                        18000,
+                        new TutorialGroup(
+                                1,
+                                24,
+                                1,
+                                1
+                        ),
+                        "Information Technology"
+                ));
 
-        System.out.print("Programme Name: ");
-        scanner.next();
-        String programmeName = scanner.nextLine();
-        System.out.println("");
-
-        System.out.print("Programme Level: \n1. Diploma\n2. Bachelor Degree\n3. Master");
-        int programmeLevel = scanner.nextInt();
-        System.out.println("");
-
-        System.out.print("Department: ");
-        scanner.next();
-        String programmeDepartment = scanner.nextLine();
-
-        System.out.print("Duration (in year): ");
-        int programmeDuration = scanner.nextInt();
-        System.out.println("");
-
-        System.out.print("Intake (e.g 2023-06): ");
-        scanner.next();
-        String programmeIntake = scanner.nextLine();
-        System.out.println("");
-
-        System.out.print("Programme Fee: ");
-        Double programmeFee = scanner.nextDouble();
-        System.out.println("");
-
-        System.out.print("Tutorial Group: ");
-        System.out.println("");
-
-        System.out.print("Programme Description: ");
-        scanner.next();
-        String description = scanner.nextLine();
-        System.out.println("");
-
+//        System.out.println("------------------\nAdd Programme Form\n------------------");
+//        System.out.print("Programme Code: ");
+//        int programmeCode = scanner.nextInt();
+//
+//        System.out.print("Programme Name: ");
+//        scanner.next();
+//        String programmeName = scanner.nextLine();
+//        System.out.println("");
+//
+//        System.out.print("Programme Level: \n1. Diploma\n2. Bachelor Degree\n3. Master");
+//        int programmeLevel = scanner.nextInt();
+//        System.out.println("");
+//
+//        System.out.print("Department: ");
+//        scanner.next();
+//        String programmeDepartment = scanner.nextLine();
+//
+//        System.out.print("Duration (in year): ");
+//        int programmeDuration = scanner.nextInt();
+//        System.out.println("");
+//
+//        System.out.print("Intake (e.g 2023-06): ");
+//        scanner.next();
+//        String programmeIntake = scanner.nextLine();
+//        System.out.println("");
+//
+//        System.out.print("Programme Fee: ");
+//        Double programmeFee = scanner.nextDouble();
+//        System.out.println("");
+//
+//        System.out.print("Tutorial Group: ");
+//        System.out.println("");
+//
+//        System.out.print("Programme Description: ");
+//        scanner.next();
+//        String description = scanner.nextLine();
+//        System.out.println("");
     }
 
     private static void removeProgramme() {
@@ -157,7 +171,21 @@ public class ProgrammeDriver {
     }
 
     private static void findProgramme() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Programme result = null;
+        boolean found = false;
+
+        System.out.print("Please enter the programme code: ");
+        String programmeCode = scanner.next();
+
+        Iterator it = programme.getIterator();
+
+        while (it.hasNext() && !found) {
+            result = (Programme) it.next();
+            if (String.valueOf(result).equals(programmeCode)) {
+                found = true;
+            }
+        }
+        System.out.println(result);
     }
 
     private static void amendProgramme() {

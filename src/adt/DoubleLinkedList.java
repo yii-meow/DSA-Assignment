@@ -132,8 +132,9 @@ public class DoubleLinkedList<T> implements ListInterface<T> {
         @Override
         public T next() {
             if (hasNext()) {
+                T returnNode = currentNode.data;
                 currentNode = currentNode.next;
-                return currentNode.data;
+                return returnNode;
             } else {
                 return null;
             }
