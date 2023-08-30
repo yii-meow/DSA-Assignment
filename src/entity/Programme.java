@@ -4,13 +4,14 @@
  */
 package entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  *
  * @author yikso
  */
-public class Programme {
+public class Programme implements Serializable {
 
     public enum LevelOfStudy {
         DIPLOMA,

@@ -11,7 +11,7 @@ import java.util.Iterator;
  *
  * @author yikso
  */
-public class DoubleLinkedList<T> implements ListInterface<T>, Serializable {
+public class DoubleLinkedList<T> implements ListInterface<T> {
 
     private int numberOfEntries;
     private Node firstNode;
@@ -33,21 +33,27 @@ public class DoubleLinkedList<T> implements ListInterface<T>, Serializable {
                 currentNode = currentNode.next;
             }
             currentNode.next = newNode;
+            newNode.prev = currentNode;
         }
         numberOfEntries++;
         return true;
     }
 
-    @Override
+    // @Override
+    // Not working due to using Comparator / Sorting
     // add new entry to any possible position
-    public boolean add(int position, T newEntry) {
-        if (position >= 1 || position < numberOfEntries + 1) {
-
-        }
-
-        return true;
-    }
-
+//    public boolean add(int position, T newEntry) {
+//        Node newNode = new Node(newEntry);
+//
+//        if (position >= 1 && position <= numberOfEntries + 1) {
+//            
+//            return true;
+//        } else {
+//            System.out.println("Insuccessfully added the new entry due to invalid position");
+//            return false;
+//        }
+//
+//    }
     @Override
     // remove the entry based on the programme id
     public T remove(T element) {
@@ -75,11 +81,6 @@ public class DoubleLinkedList<T> implements ListInterface<T>, Serializable {
         return numberOfEntries == 0;
     }
 
-    @Override
-    public boolean isFull() {
-        return true;
-    }
-
     private class Node {
 
         private T data;
@@ -103,24 +104,39 @@ public class DoubleLinkedList<T> implements ListInterface<T>, Serializable {
         return toString(firstNode, 1);
     }
 
-    public String toString(Node node, int it) {
+    public String toString(Node node, int position) {
         if (node.next != null) {
-            return "" + it + ") " + node.data + "\n" + toString(node.next, it + 1);
+            return "" + position + ") " + node.data + "\n" + toString(node.next, position + 1);
         } else {
-            return "" + it + ") " + node.data;
+            return "" + position + ") " + node.data;
         }
+    }
+
+    public Iterator<T> getIterator() {
+        return new DoubleLinkedListIterator();
     }
 
     public class DoubleLinkedListIterator implements Iterator<T> {
 
+        private Node currentNode;
+
+        DoubleLinkedListIterator() {
+            currentNode = firstNode;
+        }
+
         @Override
         public boolean hasNext() {
-            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            return currentNode != null;
         }
 
         @Override
         public T next() {
-            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+            if (hasNext()) {
+                currentNode = currentNode.next;
+                return currentNode.data;
+            } else {
+                return null;
+            }
         }
 
     }

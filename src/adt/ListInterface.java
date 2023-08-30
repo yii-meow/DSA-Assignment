@@ -1,5 +1,7 @@
 package adt;
 
+import java.util.Iterator;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
@@ -11,9 +13,8 @@ package adt;
 public interface ListInterface<T> {
 
     public boolean add(T newEntry);
-    
-    public boolean add(int position, T newEntry);
 
+//    public boolean add(int position, T newEntry);
     public T remove(T element);
 
     public void clear();
@@ -21,8 +22,8 @@ public interface ListInterface<T> {
     public boolean contains(T element);
 
     public int getNumberOfEntries();
-    
+
     public boolean isEmpty();
-    
-    public boolean isFull();
+
+    public Iterator<T> getIterator();
 }

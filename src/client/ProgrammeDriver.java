@@ -18,6 +18,7 @@ import java.util.Scanner;
 public class ProgrammeDriver {
 
     private static ListInterface<Programme> programme = new DoubleLinkedList<>();
+    static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         menu();
@@ -26,7 +27,6 @@ public class ProgrammeDriver {
     private static void menu() {
 
         int choice = 0;
-        Scanner scanner = new Scanner(System.in);
 
         do {
             System.out.println("======================\n Programme Management\n======================");
@@ -43,7 +43,8 @@ public class ProgrammeDriver {
             System.out.print("Choice: ");
 
             String option = scanner.nextLine();
-            
+//            scanner.next();
+
             System.out.println("\n");
 
             try {
@@ -79,13 +80,12 @@ public class ProgrammeDriver {
                         break;
                     default:
                         System.out.println("This choice is not yet been supported. Do you want to change it to another choice ? (Y/n)");
-                
+
                 }
                 System.out.println();
             } catch (NumberFormatException e) {
                 choice = 0;
             }
-
         } while (choice > 0 && choice <= 9);
 
         System.out.println("\nQuiting...\nThank you for using this system.");
@@ -94,23 +94,62 @@ public class ProgrammeDriver {
     }
 
     private static void addProgramme() {
-        programme.add(
-                new Programme(
-                        "RSD",
-                        "Bachelor Degree in Software Engineering",
-                        Programme.LevelOfStudy.BACHELOR_DEGREE,
-                        "FOCS",
-                        24,
-                        "2023-06",
-                        20000,
-                        new TutorialGroup(
-                                1,
-                                24,
-                                1,
-                                1
-                        ),
-                        "Information Technology"
-                ));
+//        programme.add(
+//                new Programme(
+//                        "RSD",
+//                        "Bachelor Degree in Software Engineering",
+//                        Programme.LevelOfStudy.BACHELOR_DEGREE,
+//                        "FOCS",
+//                        24,
+//                        "2023-06",
+//                        20000,
+//                        new TutorialGroup(
+//                                1,
+//                                24,
+//                                1,
+//                                1
+//                        ),
+//                        "Information Technology"
+//                ));
+
+        System.out.println("------------------\nAdd Programme Form\n------------------");
+        System.out.print("Programme Code: ");
+        int programmeCode = scanner.nextInt();
+
+        System.out.print("Programme Name: ");
+        scanner.next();
+        String programmeName = scanner.nextLine();
+        System.out.println("");
+
+        System.out.print("Programme Level: \n1. Diploma\n2. Bachelor Degree\n3. Master");
+        int programmeLevel = scanner.nextInt();
+        System.out.println("");
+
+        System.out.print("Department: ");
+        scanner.next();
+        String programmeDepartment = scanner.nextLine();
+
+        System.out.print("Duration (in year): ");
+        int programmeDuration = scanner.nextInt();
+        System.out.println("");
+
+        System.out.print("Intake (e.g 2023-06): ");
+        scanner.next();
+        String programmeIntake = scanner.nextLine();
+        System.out.println("");
+
+        System.out.print("Programme Fee: ");
+        Double programmeFee = scanner.nextDouble();
+        System.out.println("");
+
+        System.out.print("Tutorial Group: ");
+        System.out.println("");
+
+        System.out.print("Programme Description: ");
+        scanner.next();
+        String description = scanner.nextLine();
+        System.out.println("");
+
     }
 
     private static void removeProgramme() {

@@ -1,5 +1,7 @@
 package entity;
 
+import java.io.Serializable;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -8,7 +10,7 @@ package entity;
  *
  * @author yikso
  */
-public class TutorialGroup {
+public class TutorialGroup implements Serializable {
 
     private int groupNumber;
     private int numberOfStudents;
