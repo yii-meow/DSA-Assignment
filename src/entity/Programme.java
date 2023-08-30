@@ -137,6 +137,11 @@ public class Programme implements Serializable {
 
     @Override
     public String toString() {
-        return "" + programmeCode;
+        return "Programme Code : " + programmeCode + "\nProgramme Name : " + programmeName
+                + "\nProgramme Level : " + programmeLevel + ", \nDepartment : " + department
+                + "\nDuration : " + duration + "\nIntake : " + intake + "\nProgramme Fee : RM " + String.format("%.2f", fee)
+                + "\nTutorial Group : " + tutorialGroup + "\n\nProgramme Description : " + description + "\n\n";
+
     }
+
 }

@@ -23,20 +23,25 @@ public class DoubleLinkedList<T> implements ListInterface<T> {
     @Override
     // Add new node to the rear by default
     public boolean add(T newEntry) {
-        Node newNode = new Node(newEntry);
+        // Avoid duplicate entry (programme Code & intake)
+        if (!contains(newEntry)) {
+            Node newNode = new Node(newEntry);
 
-        if (numberOfEntries == 0) {
-            firstNode = newNode;
-        } else {
-            Node currentNode = firstNode;
-            while (currentNode.next != null) {
-                currentNode = currentNode.next;
+            if (numberOfEntries == 0) {
+                firstNode = newNode;
+            } else {
+                Node currentNode = firstNode;
+                while (currentNode.next != null) {
+                    currentNode = currentNode.next;
+                }
+                currentNode.next = newNode;
+                newNode.prev = currentNode;
             }
-            currentNode.next = newNode;
-            newNode.prev = currentNode;
+            numberOfEntries++;
+            return true;
+        } else {
+            return false;
         }
-        numberOfEntries++;
-        return true;
     }
 
     // @Override
@@ -68,7 +73,14 @@ public class DoubleLinkedList<T> implements ListInterface<T> {
 
     @Override
     public boolean contains(T element) {
-        return true;
+        Iterator it = getIterator();
+
+        while (it.hasNext()) {
+            if (it.next() == element) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -101,14 +113,17 @@ public class DoubleLinkedList<T> implements ListInterface<T> {
 
     @Override
     public String toString() {
+        if (isEmpty()) {
+            return "No programme added so far...";
+        }
         return toString(firstNode, 1);
     }
 
     public String toString(Node node, int position) {
-        if (node.next != null) {
+        if (node != null) {
             return "" + position + ") " + node.data + "\n" + toString(node.next, position + 1);
         } else {
-            return "" + position + ") " + node.data;
+            return "";
         }
     }
 
