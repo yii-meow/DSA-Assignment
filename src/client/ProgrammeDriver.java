@@ -7,6 +7,8 @@ package client;
 import adt.DoubleLinkedList;
 import adt.ListInterface;
 import entity.Programme;
+import entity.TutorialGroup;
+import java.util.Iterator;
 import java.util.Scanner;
 
 /**
@@ -15,15 +17,16 @@ import java.util.Scanner;
  */
 public class ProgrammeDriver {
 
-    ListInterface<Programme> programme = new DoubleLinkedList<>();
+    private static ListInterface<Programme> programme = new DoubleLinkedList<>();
 
     public static void main(String[] args) {
         menu();
     }
 
-    public static void menu() {
+    private static void menu() {
 
         int choice = 0;
+        Scanner scanner = new Scanner(System.in);
 
         do {
             System.out.println("======================\n Programme Management\n======================");
@@ -35,51 +38,79 @@ public class ProgrammeDriver {
             System.out.println("6. Add a tutorial group to a programme");
             System.out.println("7. Remove a tutorial group from a programme");
             System.out.println("8. List all tutorial groups from a programme");
-            System.out.println("9. Generate relevant reports\n\n");
+            System.out.println("9. Generate relevant reports\n");
 
             System.out.print("Choice: ");
 
-            Scanner scanner = new Scanner(System.in);
+            String option = scanner.nextLine();
+            
+            System.out.println("\n");
 
-            choice = scanner.nextInt();
+            try {
+                choice = Integer.parseInt(option);
 
-            switch (choice) {
-                case 1:
-                    addProgramme();
-                    break;
-                case 2:
-                    removeProgramme();
-                    break;
-                case 3:
-                    findProgramme();
-                    break;
-                case 4:
-                    amendProgramme();
-                    break;
-                case 5:
-                    listProgramme();
-                    break;
-                case 6:
-                    addGroupToProgramme();
-                    break;
-                case 7:
-                    removeGroupFromProgramme();
-                    break;
-                case 8:
-                    listGroupFromProgramme();
-                    break;
-                case 9:
-                    generateReport();
-                    break;
-                default:
-                    System.out.println("Thank you for using this system.");
+                switch (choice) {
+                    case 1:
+                        addProgramme();
+                        break;
+                    case 2:
+                        removeProgramme();
+                        break;
+                    case 3:
+                        findProgramme();
+                        break;
+                    case 4:
+                        amendProgramme();
+                        break;
+                    case 5:
+                        listProgramme();
+                        break;
+                    case 6:
+                        addGroupToProgramme();
+                        break;
+                    case 7:
+                        removeGroupFromProgramme();
+                        break;
+                    case 8:
+                        listGroupFromProgramme();
+                        break;
+                    case 9:
+                        generateReport();
+                        break;
+                    default:
+                        System.out.println("This choice is not yet been supported. Do you want to change it to another choice ? (Y/n)");
+                
+                }
+                System.out.println();
+            } catch (NumberFormatException e) {
+                choice = 0;
             }
 
-        } while (choice >= 0 && choice <= 9);
+        } while (choice > 0 && choice <= 9);
+
+        System.out.println("\nQuiting...\nThank you for using this system.");
+        scanner.close();
+
     }
 
     private static void addProgramme() {
-
+        programme.add(
+                new Programme(
+                        "RSD",
+                        "Bachelor Degree in Software Engineering",
+                        Programme.LevelOfStudy.BACHELOR_DEGREE,
+                        "FOCS",
+                        24,
+                        "2023-06",
+                        20000,
+                        new TutorialGroup(
+                                1,
+                                24,
+                                1,
+                                1
+                        ),
+                        "Information Technology"
+                ));
     }
 
     private static void removeProgramme() {
@@ -95,7 +126,8 @@ public class ProgrammeDriver {
     }
 
     private static void listProgramme() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        System.out.println("-----------------\nProgramme Listing\n-----------------");
+        System.out.println(programme);
     }
 
     private static void addGroupToProgramme() {

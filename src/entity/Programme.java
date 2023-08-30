@@ -12,7 +12,7 @@ import java.util.Objects;
  */
 public class Programme {
 
-    private enum LevelOfStudy {
+    public enum LevelOfStudy {
         DIPLOMA,
         BACHELOR_DEGREE,
         MASTER
@@ -136,6 +136,6 @@ public class Programme {
 
     @Override
     public String toString() {
-        return "Programme: " + programmeCode;
+        return "" + programmeCode;
     }
 }

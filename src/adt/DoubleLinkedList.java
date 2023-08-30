@@ -5,6 +5,7 @@
 package adt;
 
 import java.io.Serializable;
+import java.util.Iterator;
 
 /**
  *
@@ -20,23 +21,25 @@ public class DoubleLinkedList<T> implements ListInterface<T>, Serializable {
     }
 
     @Override
+    // Add new node to the rear by default
     public boolean add(T newEntry) {
         Node newNode = new Node(newEntry);
 
         if (numberOfEntries == 0) {
             firstNode = newNode;
         } else {
-            Node currentNode = null;
-            while (firstNode.next != null) {
-                currentNode = firstNode.next;
+            Node currentNode = firstNode;
+            while (currentNode.next != null) {
+                currentNode = currentNode.next;
             }
             currentNode.next = newNode;
         }
-
+        numberOfEntries++;
         return true;
     }
 
     @Override
+    // add new entry to any possible position
     public boolean add(int position, T newEntry) {
         if (position >= 1 || position < numberOfEntries + 1) {
 
@@ -46,6 +49,7 @@ public class DoubleLinkedList<T> implements ListInterface<T>, Serializable {
     }
 
     @Override
+    // remove the entry based on the programme id
     public T remove(T element) {
         return null;
     }
@@ -96,6 +100,28 @@ public class DoubleLinkedList<T> implements ListInterface<T>, Serializable {
 
     @Override
     public String toString() {
-        return "";
+        return toString(firstNode, 1);
+    }
+
+    public String toString(Node node, int it) {
+        if (node.next != null) {
+            return "" + it + ") " + node.data + "\n" + toString(node.next, it + 1);
+        } else {
+            return "" + it + ") " + node.data;
+        }
+    }
+
+    public class DoubleLinkedListIterator implements Iterator<T> {
+
+        @Override
+        public boolean hasNext() {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
+        @Override
+        public T next() {
+            throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        }
+
     }
 }
