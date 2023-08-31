@@ -41,7 +41,7 @@ public class ProgrammeDriver {
             System.out.println("9. Generate relevant reports\n");
             System.out.print("Choice: ");
 
-            String option = scanner.nextLine();
+            String option = scanner.next();
             System.out.println("\n");
 
             try {
@@ -172,8 +172,8 @@ public class ProgrammeDriver {
                         + "\n"
                         + "Need more rephrasing? Just let me know!"
                 ));
-                
-          // User input
+
+        // User input
 //        System.out.println("------------------\nAdd Programme Form\n------------------");
 //        System.out.print("Programme Code: ");
 //        int programmeCode = scanner.nextInt();
@@ -217,32 +217,119 @@ public class ProgrammeDriver {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    // Find the programme, and provide the details of it
     private static void findProgramme() {
+        Programme res = programmeDetails();
+
+        if (res != null) {
+            System.out.println("Here's the result...\n\n" + res);
+        } else {
+            System.out.println("Programme not found!");
+        }
+    }
+
+    // Return the found programme
+    private static Programme programmeDetails() {
+        System.out.print("Please enter the programme code: ");
+        String programmeCode = scanner.next();
+        programmeCode = programmeCode.toUpperCase();
+
         Programme result = null;
         boolean found = false;
 
-        System.out.print("Please enter the programme code: ");
-        String programmeCode = scanner.next();
-
         Iterator it = programme.getIterator();
+
+        System.out.println("\nFinding the programme....\n");
 
         while (it.hasNext() && !found) {
             result = (Programme) it.next();
-            if (String.valueOf(result).equals(programmeCode)) {
-                found = true;
+            if (result.getProgrammeCode().equals(programmeCode)) {
+                return result;
             }
         }
-        System.out.println(result);
+
+        return null;
     }
 
     private static void amendProgramme() {
-        
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Programme res = programmeDetails();
+
+        if (res != null) {
+            System.out.println("Which details to amemd ? (-1 to exit) *Programme Code is not allowed to be amend*");
+            System.out.println("1. Programme Name");
+            System.out.println("2. Programme Level");
+            System.out.println("3. Department");
+            System.out.println("4. Programme Duration");
+            System.out.println("5. Programme Intake");
+            System.out.println("6. Programme Fee");
+            System.out.println("7. Tutorial Group");
+            System.out.println("8. Programme Description");
+
+            int amendOption = scanner.nextInt();
+
+            while ((amendOption < 1 || amendOption > 8) && amendOption != -1) {
+                System.out.println("Please enter a valid choice! (choose from 1-8 or -1 to exit)");
+                amendOption = scanner.nextInt();
+            }
+
+            System.out.println("Previous Details :");
+
+            switch (amendOption) {
+                case 1:
+                    System.out.println(res.getProgrammeName());
+                    System.out.println("Amended Programme Name > ");
+                    break;
+                case 2:
+                    System.out.println(res.getProgrammeLevel());
+                    System.out.println("Amended Programme Level > ");
+                    break;
+                case 3:
+                    System.out.println(res.getDepartment());
+                    System.out.println("Amended Department > ");
+                    break;
+                case 4:
+                    System.out.println(res.getDuration());
+                    System.out.println("Amended Programme Duration > ");
+                    break;
+                case 5:
+                    System.out.println(res.getIntake());
+                    System.out.println("Amended Programme Intake > ");
+                    break;
+                case 6:
+                    System.out.println(res.getFee());
+                    System.out.println("Amended Programme Fee > ");
+                    break;
+                case 7:
+                    System.out.println(res.getTutorialGroup());
+                    System.out.println("Amended Tutorial Group > ");
+                    break;
+                case 8:
+                    System.out.println(res.getDescription());
+                    System.out.println("Amended Programme Description > ");
+            }
+            System.out.println("\n\nxxx -> yyy \nConfirm ? (Y/n) : _\b");
+            char option = scanner.next().charAt(0);
+            if (option == 'Y') {
+                System.out.println("Amended.");
+            } else {
+                System.out.println("Cancelled operation.");
+            }
+        } else {
+            System.out.println("Programme not found!");
+        }
+
     }
 
     private static void listProgramme() {
         System.out.println("-----------------\nProgramme Listing\n-----------------");
         System.out.println(programme);
+
+        Iterator it = programme.getIterator();
+        Programme res = (Programme) it.next();
+        System.out.println(res.getProgrammeCode());
+//        while(it.hasNext()){
+//            System.out.println(it.next().);
+//        }
     }
 
     private static void addGroupToProgramme() {
