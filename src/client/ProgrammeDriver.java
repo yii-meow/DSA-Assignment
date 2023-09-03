@@ -29,7 +29,7 @@ public class ProgrammeDriver {
         int choice = 0;
 
         do {
-            System.out.println("======================\n Programme Management\n======================");
+            System.out.println("==========================================\n\tProgramme Management\n==========================================");
             System.out.println("1. Add a new programme");
             System.out.println("2. Remove a programme");
             System.out.println("3. Find programme");

@@ -83,9 +83,12 @@ public class DoubleLinkedList<T> implements ListInterface<T> {
         return false;
     }
 
-    @Override
-    public int getNumberOfEntries() {
-        return numberOfEntries;
+//    @Override
+    public int getNumberOfEntries(Node node) {
+        if (node == null) {
+            return 0;
+        }
+        return 1 + getNumberOfEntries(node.next);
     }
 
     @Override
@@ -93,7 +96,7 @@ public class DoubleLinkedList<T> implements ListInterface<T> {
         return numberOfEntries == 0;
     }
 
-    private class Node {
+    public class Node {
 
         private T data;
         private Node next;

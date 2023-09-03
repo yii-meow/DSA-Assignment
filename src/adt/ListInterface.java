@@ -1,5 +1,6 @@
 package adt;
 
+import adt.DoubleLinkedList.Node;
 import java.util.Iterator;
 
 /*
@@ -14,14 +15,13 @@ public interface ListInterface<T> {
 
     public boolean add(T newEntry);
 
-//    public boolean add(int position, T newEntry);
     public T remove(T element);
 
     public void clear();
 
     public boolean contains(T element);
 
-    public int getNumberOfEntries();
+//    public int getNumberOfEntries(Node node);
 
     public boolean isEmpty();
 
