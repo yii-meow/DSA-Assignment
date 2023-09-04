@@ -11,7 +11,12 @@ import java.util.Objects;
  *
  * @author yikso
  */
-public class Programme implements Serializable {
+public class Programme implements Comparable<Programme>, Serializable {
+
+    @Override
+    public int compareTo(Programme programme) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
     public enum LevelOfStudy {
         DIPLOMA,

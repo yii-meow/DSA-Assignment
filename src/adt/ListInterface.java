@@ -1,6 +1,5 @@
 package adt;
 
-import adt.DoubleLinkedList.Node;
 import java.util.Iterator;
 
 /*
@@ -11,7 +10,7 @@ import java.util.Iterator;
  *
  * @author yikso
  */
-public interface ListInterface<T> {
+public interface ListInterface<T extends Comparable<T>> {
 
     public boolean add(T newEntry);
 
@@ -22,7 +21,6 @@ public interface ListInterface<T> {
     public boolean contains(T element);
 
 //    public int getNumberOfEntries(Node node);
-
     public boolean isEmpty();
 
     public Iterator<T> getIterator();

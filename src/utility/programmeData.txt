@@ -1,4 +1,4 @@
-RSD,Bachelor in Software System Development,BACHELOR_DEGREE,FOCS,36,2023-06,20000,RSD,1,24,1,1,Software Engineering
 DFT,Diploma in Information Technology,DIPLOMA,FOCS,24,2023-06,18000,DFT,1,24,1,1,Information Technology
-RIS,Bachelor in Information Security,BACHELOR_DEGREE,FOCS,36,2023-06,22000,RIS,1,24,1,1,Information Security
 RDS,Bachelor in Data Science,BACHELOR_DEGREE,FOCS,36,2023-06,24000,RDS,1,24,1,1,Data Science
+RIS,Bachelor in Information Security,BACHELOR_DEGREE,FOCS,36,2023-06,22000,RIS,1,24,1,1,Information Security
+RSD,Bachelor in Software System Development,BACHELOR_DEGREE,FOCS,36,2023-06,20000,RSD,1,24,1,1,Software Engineering

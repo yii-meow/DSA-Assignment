@@ -11,7 +11,7 @@ import java.util.Iterator;
  *
  * @author yikso
  */
-public class DoubleLinkedList<T> implements ListInterface<T>, Serializable {
+public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<T>, Serializable {
 
     private int numberOfEntries;
     private Node firstNode;
