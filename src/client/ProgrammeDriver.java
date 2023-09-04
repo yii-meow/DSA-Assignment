@@ -114,7 +114,7 @@ public class ProgrammeDriver {
         System.out.println("");
 
         // Programme Name is not allowed to have duplicated entry as well
-        System.out.print("Programme Level: \n1. Diploma\n2. Bachelor Degree\n3. Master");
+        System.out.print("Programme Level\n1. Diploma\n2. Bachelor Degree\n3. Master\n\n> ");
         int option = scanner.nextInt();
         String programmeLevel;
 
@@ -148,6 +148,12 @@ public class ProgrammeDriver {
         System.out.print("Intake (e.g 2023-06): ");
         scanner.next();
         String programmeIntake = scanner.nextLine();
+
+        while (!programmeIntake.matches("^\\d{4}-(0[1-9]|1[0-2])$")) {
+            System.out.println("\nInvalid programme intake format. Please format this format (e.g 2023-06).\n");
+            programmeIntake = scanner.nextLine();
+        }
+
         System.out.println("");
 
         System.out.print("Programme Fee: ");
