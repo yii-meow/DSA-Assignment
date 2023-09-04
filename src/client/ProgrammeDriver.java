@@ -11,7 +11,6 @@ import entity.TutorialGroup;
 import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 import utility.dummyData;
 
 /**
@@ -88,7 +87,9 @@ public class ProgrammeDriver {
             } catch (NumberFormatException e) {
                 choice = 0;
             }
-        } while (choice > 0 && choice <= 9);
+            System.out.print("Do you want to continue ? (Y/n) : ");
+            scanner.nextLine();
+        } while ((choice > 0 && choice <= 9) && scanner.next().toUpperCase().charAt(0) == 'Y');
 
         System.out.println("\nQuiting...\nThank you for using this system.");
         scanner.close();
@@ -252,11 +253,14 @@ public class ProgrammeDriver {
 
         if (programmeToRemove != null) {
             System.out.println("Are you sure to remove the program :" + programmeCode + " ?");
-            if (scanner.next().toUpperCase().equals('Y')) {
+            if (scanner.next().toUpperCase().charAt(0) == 'Y') {
                 if (programmeList.remove(programmeToRemove) != null) {
+                    System.out.println("Successfully removed the program.");
                     return true;
                 }
             }
+        } else {
+            System.out.println("The program code - " + programmeCode + " does not exists.");
         }
 
         return false;
@@ -368,15 +372,18 @@ public class ProgrammeDriver {
     }
 
     private static void listProgramme() {
+        // First way : Overview
         System.out.println("-----------------\nProgramme Listing\n-----------------");
         System.out.println(programmeList);
-
+        
+        // Second way : Specific (Click next / previous to check programme one by one)
         Iterator it = programmeList.getIterator();
         Programme res = (Programme) it.next();
-        System.out.println(res.getProgrammeCode());
 //        while(it.hasNext()){
 //            System.out.println(it.next().);
 //        }
+
+        // Third way : Straight click on a programme and check the details without arrow function
     }
 
     private static void addGroupToProgramme() {

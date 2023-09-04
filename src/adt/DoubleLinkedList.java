@@ -62,6 +62,22 @@ public class DoubleLinkedList<T> implements ListInterface<T>, Serializable {
     @Override
     // remove the entry based on the programme id
     public T remove(T element) {
+        if (contains(element)) {
+            Node currentNode = firstNode;
+            while (currentNode.next != null && currentNode.data != element) {
+                currentNode = currentNode.next;
+            }
+            // Remove the only element
+            if (getNumberOfEntries() == 1) {
+                clear();
+            } // Remove the first element
+            else if (currentNode.prev == null) {
+                firstNode = currentNode.next;
+            } else {
+                currentNode.prev.next = currentNode.next;
+            }
+            return (T) currentNode;
+        }
         return null;
     }
 
@@ -83,6 +99,11 @@ public class DoubleLinkedList<T> implements ListInterface<T>, Serializable {
         return false;
     }
 
+    // Initialize
+    public int getNumberOfEntries() {
+        return getNumberOfEntries(firstNode);
+    }
+
 //    @Override
     public int getNumberOfEntries(Node node) {
         if (node == null) {
@@ -96,7 +117,7 @@ public class DoubleLinkedList<T> implements ListInterface<T>, Serializable {
         return numberOfEntries == 0;
     }
 
-    public class Node implements Serializable{
+    public class Node implements Serializable {
 
         private T data;
         private Node next;
