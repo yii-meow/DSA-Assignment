@@ -10,6 +10,7 @@ import entity.Programme;
 import entity.TutorialGroup;
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 import utility.dummyData;
 
 /**
@@ -18,10 +19,12 @@ import utility.dummyData;
  */
 public class ProgrammeDriver {
 
-    private static ListInterface<Programme> programme = new DoubleLinkedList<>();
+    private static ListInterface<Programme> programmeList = new DoubleLinkedList<>();
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        // retrieve existing data
+        programmeList = dummyData.initializeProgrammeData();
         menu();
     }
 
@@ -91,48 +94,94 @@ public class ProgrammeDriver {
     }
 
     private static void addProgramme() {
-        System.out.println(dummyData.initializeProgrammeData());
-        // Temporary dummy data
-        
+        // Todo - Validation for every input
 
         // User input
-//        System.out.println("------------------\nAdd Programme Form\n------------------");
-//        System.out.print("Programme Code: ");
-//        int programmeCode = scanner.nextInt();
-//
-//        System.out.print("Programme Name: ");
-//        scanner.next();
-//        String programmeName = scanner.nextLine();
-//        System.out.println("");
-//
-//        System.out.print("Programme Level: \n1. Diploma\n2. Bachelor Degree\n3. Master");
-//        int programmeLevel = scanner.nextInt();
-//        System.out.println("");
-//
-//        System.out.print("Department: ");
-//        scanner.next();
-//        String programmeDepartment = scanner.nextLine();
-//
-//        System.out.print("Duration (in year): ");
-//        int programmeDuration = scanner.nextInt();
-//        System.out.println("");
-//
-//        System.out.print("Intake (e.g 2023-06): ");
-//        scanner.next();
-//        String programmeIntake = scanner.nextLine();
-//        System.out.println("");
-//
-//        System.out.print("Programme Fee: ");
-//        Double programmeFee = scanner.nextDouble();
-//        System.out.println("");
-//
-//        System.out.print("Tutorial Group: ");
-//        System.out.println("");
-//
-//        System.out.print("Programme Description: ");
-//        scanner.next();
-//        String description = scanner.nextLine();
-//        System.out.println("");
+        System.out.println("------------------\nAdd Programme Form\n------------------");
+        System.out.print("Programme Code: ");
+        String programmeCode = scanner.next();
+        while (!programmeCode.matches("^[A-Za-z]{3}")) {
+            System.out.println("\nInvalid programme code. Programme code should contains three alphabets.\n");
+            System.out.print("Programme Code: ");
+            programmeCode = scanner.next();
+        }
+
+        // Program Code is primary key. User can only amend details
+        // Check if this programme code exists in the file
+        System.out.print("Programme Name: ");
+        scanner.next();
+        String programmeName = scanner.nextLine();
+        System.out.println("");
+
+        // Programme Name is not allowed to have duplicated entry as well
+        System.out.print("Programme Level: \n1. Diploma\n2. Bachelor Degree\n3. Master");
+        int option = scanner.nextInt();
+        String programmeLevel;
+
+        while (option < 1 || option > 3) {
+            System.out.println("Invalid option. Please choose from 1-3 ONLY");
+            System.out.print("Programme Level: \n1. Diploma\n2. Bachelor Degree\n3. Master");
+            option = scanner.nextInt();
+        }
+
+        switch (option) {
+            case 1:
+                programmeLevel = "DIPLOMA";
+                break;
+            case 2:
+                programmeLevel = "BACHELOR_DEGREE";
+                break;
+            case 3:
+                programmeLevel = "MASTER";
+        }
+
+        System.out.println("");
+
+        System.out.print("Department: ");
+        scanner.next();
+        String programmeDepartment = scanner.nextLine();
+
+        System.out.print("Duration (in year): ");
+        int programmeDuration = scanner.nextInt();
+        System.out.println("");
+
+        System.out.print("Intake (e.g 2023-06): ");
+        scanner.next();
+        String programmeIntake = scanner.nextLine();
+        System.out.println("");
+
+        System.out.print("Programme Fee: ");
+        Double programmeFee = scanner.nextDouble();
+        System.out.println("");
+
+        // Let user choose from a list
+        System.out.print("Tutorial Group: ");
+        TutorialGroup tutorialGroup = null;
+        System.out.println("");
+
+        System.out.print("Programme Description: ");
+        scanner.next();
+        String description = scanner.nextLine();
+        System.out.println("");
+
+        Programme programme = new Programme(
+                programmeCode,
+                programmeName,
+                // to change
+                Programme.LevelOfStudy.BACHELOR_DEGREE,
+                programmeDepartment,
+                programmeDuration,
+                programmeIntake,
+                programmeFee,
+                new TutorialGroup(),
+                description
+        );
+
+        if (programmeList.add(programme)) {
+            System.out.println("Successfully added the programme - " + programmeCode + " !");
+        } else {
+            System.out.println("Invalid entry. Please try again !");
+        }
     }
 
     private static void removeProgramme() {
@@ -140,26 +189,28 @@ public class ProgrammeDriver {
     }
 
     // Find the programme, and provide the details of it
-    private static void findProgramme() {
-        Programme res = programmeDetails();
-
-        if (res != null) {
-            System.out.println("Here's the result...\n\n" + res);
-        } else {
-            System.out.println("Programme not found!");
-        }
-    }
-
-    // Return the found programme
-    private static Programme programmeDetails() {
+    private static Programme findProgramme() {
         System.out.print("Please enter the programme code: ");
         String programmeCode = scanner.next();
         programmeCode = programmeCode.toUpperCase();
 
+        Programme res = programmeDetails(programmeCode);
+
+        if (res != null) {
+            System.out.println("Here's the result...\n\n" + res);
+            return res;
+        } else {
+            System.out.println("Programme not found!");
+            return null;
+        }
+    }
+
+    // Return the found programme
+    private static Programme programmeDetails(String programmeCode) {
         Programme result = null;
         boolean found = false;
 
-        Iterator it = programme.getIterator();
+        Iterator it = programmeList.getIterator();
 
         System.out.println("\nFinding the programme....\n");
 
@@ -174,7 +225,7 @@ public class ProgrammeDriver {
     }
 
     private static void amendProgramme() {
-        Programme res = programmeDetails();
+        Programme res = findProgramme();
 
         if (res != null) {
             System.out.println("Which details to amemd ? (-1 to exit) *Programme Code is not allowed to be amend*");
@@ -244,9 +295,9 @@ public class ProgrammeDriver {
 
     private static void listProgramme() {
         System.out.println("-----------------\nProgramme Listing\n-----------------");
-        System.out.println(programme);
+        System.out.println(programmeList);
 
-        Iterator it = programme.getIterator();
+        Iterator it = programmeList.getIterator();
         Programme res = (Programme) it.next();
         System.out.println(res.getProgrammeCode());
 //        while(it.hasNext()){

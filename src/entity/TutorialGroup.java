@@ -17,6 +17,10 @@ public class TutorialGroup implements Serializable {
     private int yearOfStudy;
     private int semesterOfStudy;
 
+    public TutorialGroup() {
+
+    }
+
     public TutorialGroup(int groupNumber, int numberOfStudents, int yearOfStudy, int semesterOfStudy) {
         this.groupNumber = groupNumber;
         this.numberOfStudents = numberOfStudents;
