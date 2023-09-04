@@ -8,6 +8,7 @@ import adt.DoubleLinkedList;
 import adt.ListInterface;
 import entity.Programme;
 import entity.TutorialGroup;
+import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -94,10 +95,13 @@ public class ProgrammeDriver {
     }
 
     private static void addProgramme() {
-        // Todo - Validation for every input
+        // variable for validation
+        boolean isValid = false;
 
-        // User input
         System.out.println("------------------\nAdd Programme Form\n------------------");
+
+        // Program Code is primary key. User can only amend details
+        // Check if this programme code exists in the file
         System.out.print("Programme Code: ");
         String programmeCode = scanner.next();
         while (!programmeCode.matches("^[A-Za-z]{3}")) {
@@ -106,24 +110,32 @@ public class ProgrammeDriver {
             programmeCode = scanner.next();
         }
 
-        // Program Code is primary key. User can only amend details
-        // Check if this programme code exists in the file
+        // Programme Name is not allowed to have duplicated entry as well
         System.out.print("Programme Name: ");
         scanner.next();
         String programmeName = scanner.nextLine();
         System.out.println("");
 
-        // Programme Name is not allowed to have duplicated entry as well
-        System.out.print("Programme Level\n1. Diploma\n2. Bachelor Degree\n3. Master\n\n> ");
-        int option = scanner.nextInt();
-        String programmeLevel;
+        // Programme Level
+        int option = 0;
 
-        while (option < 1 || option > 3) {
-            System.out.println("Invalid option. Please choose from 1-3 ONLY");
-            System.out.print("Programme Level: \n1. Diploma\n2. Bachelor Degree\n3. Master");
-            option = scanner.nextInt();
+        while (!isValid || (option < 1 || option > 3)) {
+            try {
+                System.out.print("\nProgramme Level: \n1. Diploma\n2. Bachelor Degree\n3. Maste\n\n> ");
+                option = scanner.nextInt();
+                if (option < 1 || option > 3) {
+                    System.out.println("Invalid option. Please choose from 1-3 ONLY");
+                }
+                isValid = true;
+            } catch (InputMismatchException ex) {
+                System.out.println("Invalid option. Please choose from 1-3 ONLY");
+                scanner.nextLine();
+            }
         }
 
+        String programmeLevel;
+
+        // Convert programme level (number) to enum
         switch (option) {
             case 1:
                 programmeLevel = "DIPLOMA";
@@ -134,19 +146,33 @@ public class ProgrammeDriver {
             case 3:
                 programmeLevel = "MASTER";
         }
-
         System.out.println("");
 
+        // Department
         System.out.print("Department: ");
         scanner.next();
         String programmeDepartment = scanner.nextLine();
 
-        System.out.print("Duration (in year): ");
-        int programmeDuration = scanner.nextInt();
+        // Duration
+        int programmeDuration = 0;
+        isValid = false;
+
+        while (!isValid) {
+            try {
+                System.out.print("Duration (in year): ");
+                programmeDuration = scanner.nextInt();
+                isValid = true;
+            } catch (InputMismatchException ex) {
+                System.out.println("Please ensure the duration is a positive whole number");
+                scanner.nextLine();
+            }
+        }
+
         System.out.println("");
 
+        // Intake
         System.out.print("Intake (e.g 2023-06): ");
-        scanner.next();
+        scanner.nextLine();
         String programmeIntake = scanner.nextLine();
 
         while (!programmeIntake.matches("^\\d{4}-(0[1-9]|1[0-2])$")) {
@@ -156,8 +182,21 @@ public class ProgrammeDriver {
 
         System.out.println("");
 
-        System.out.print("Programme Fee: ");
-        Double programmeFee = scanner.nextDouble();
+        // Programme Fee
+        Double programmeFee = 0.0;
+        isValid = false;
+
+        while (!isValid) {
+            try {
+                System.out.print("Programme Fee (RM) : ");
+                programmeFee = scanner.nextDouble();
+                isValid = true;
+            } catch (InputMismatchException ex) {
+                System.out.println("Invalid data. Please ensure the fee is a positive value");
+                scanner.nextLine();
+            }
+        }
+
         System.out.println("");
 
         // Let user choose from a list
@@ -165,8 +204,9 @@ public class ProgrammeDriver {
         TutorialGroup tutorialGroup = null;
         System.out.println("");
 
+        // Description
         System.out.print("Programme Description: ");
-        scanner.next();
+        scanner.nextLine();
         String description = scanner.nextLine();
         System.out.println("");
 
@@ -185,6 +225,8 @@ public class ProgrammeDriver {
 
         if (programmeList.add(programme)) {
             System.out.println("Successfully added the programme - " + programmeCode + " !");
+            System.out.println(programme);
+            System.out.println(programmeList);
         } else {
             System.out.println("Invalid entry. Please try again !");
         }
