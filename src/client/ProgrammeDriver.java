@@ -243,8 +243,23 @@ public class ProgrammeDriver {
         }
     }
 
-    private static void removeProgramme() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private static boolean removeProgramme() {
+        System.out.print("Please enter the programme code: ");
+        String programmeCode = scanner.next();
+        programmeCode = programmeCode.toUpperCase();
+
+        Programme programmeToRemove = programmeDetails(programmeCode);
+
+        if (programmeToRemove != null) {
+            System.out.println("Are you sure to remove the program :" + programmeCode + " ?");
+            if (scanner.next().toUpperCase().equals('Y')) {
+                if (programmeList.remove(programmeToRemove) != null) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     // Find the programme, and provide the details of it

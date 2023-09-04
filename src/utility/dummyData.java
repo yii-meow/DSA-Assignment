@@ -135,7 +135,7 @@ public class dummyData {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 // valid format
-                if (parts.length == 12) {
+                if (parts.length == 13) {
                     Programme programme = new Programme(
                             parts[0],
                             parts[1],
@@ -145,12 +145,13 @@ public class dummyData {
                             parts[5],
                             Double.parseDouble(parts[6]),
                             new TutorialGroup(
-                                    Integer.parseInt(parts[7]),
+                                    parts[7],
                                     Integer.parseInt(parts[8]),
                                     Integer.parseInt(parts[9]),
-                                    Integer.parseInt(parts[10])
+                                    Integer.parseInt(parts[10]),
+                                    Integer.parseInt(parts[11])
                             ),
-                            parts[11]
+                            parts[12]
                     );
                     programmeList.add(programme);
                 }

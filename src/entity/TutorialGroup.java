@@ -12,6 +12,7 @@ import java.io.Serializable;
  */
 public class TutorialGroup implements Serializable {
 
+    private String programmeCode;
     private int groupNumber;
     private int numberOfStudents;
     private int yearOfStudy;
@@ -21,11 +22,20 @@ public class TutorialGroup implements Serializable {
 
     }
 
-    public TutorialGroup(int groupNumber, int numberOfStudents, int yearOfStudy, int semesterOfStudy) {
+    public TutorialGroup(String programmeCode,int groupNumber, int numberOfStudents, int yearOfStudy, int semesterOfStudy) {
+        this.programmeCode = programmeCode;
         this.groupNumber = groupNumber;
         this.numberOfStudents = numberOfStudents;
         this.yearOfStudy = yearOfStudy;
         this.semesterOfStudy = semesterOfStudy;
+    }
+
+    public String getProgrammeCode() {
+        return programmeCode;
+    }
+
+    public void setProgrammeCode(String programmeCode) {
+        this.programmeCode = programmeCode;
     }
 
     public int getGroupNumber() {
