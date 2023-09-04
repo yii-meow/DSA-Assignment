@@ -101,7 +101,6 @@ public class ProgrammeDriver {
         System.out.println("------------------\nAdd Programme Form\n------------------");
 
         // Program Code is primary key. User can only amend details
-        // Check if this programme code exists in the file
         System.out.print("Programme Code: ");
         String programmeCode = scanner.next();
         while (!programmeCode.matches("^[A-Za-z]{3}")) {
@@ -110,7 +109,18 @@ public class ProgrammeDriver {
             programmeCode = scanner.next();
         }
 
-        // Programme Name is not allowed to have duplicated entry as well
+        // Duplicated entry - programme code , ask for amend details?
+        if (programmeDetails(programmeCode) != null) {
+            System.out.println("The programme code " + programmeCode + " is existed.\nDo you want to amend details? (Y/n) : ");
+            if (scanner.next().equals("Y") || scanner.next().equals('y')) {
+                amendProgramme();
+            } else {
+                return;
+            }
+        }
+        System.out.println("Programme Code is valid!\n");
+
+        // Programme Name is not allowed to have duplicated entry
         System.out.print("Programme Name: ");
         scanner.next();
         String programmeName = scanner.nextLine();
@@ -121,7 +131,7 @@ public class ProgrammeDriver {
 
         while (!isValid || (option < 1 || option > 3)) {
             try {
-                System.out.print("\nProgramme Level: \n1. Diploma\n2. Bachelor Degree\n3. Maste\n\n> ");
+                System.out.print("\nProgramme Level: \n1. Diploma\n2. Bachelor Degree\n3. Master\n\n> ");
                 option = scanner.nextInt();
                 if (option < 1 || option > 3) {
                     System.out.println("Invalid option. Please choose from 1-3 ONLY");
@@ -133,7 +143,7 @@ public class ProgrammeDriver {
             }
         }
 
-        String programmeLevel;
+        String programmeLevel = "";
 
         // Convert programme level (number) to enum
         switch (option) {
@@ -150,8 +160,9 @@ public class ProgrammeDriver {
 
         // Department
         System.out.print("Department: ");
-        scanner.next();
+        scanner.nextLine();
         String programmeDepartment = scanner.nextLine();
+        System.out.println("");
 
         // Duration
         int programmeDuration = 0;
@@ -214,7 +225,7 @@ public class ProgrammeDriver {
                 programmeCode,
                 programmeName,
                 // to change
-                Programme.LevelOfStudy.BACHELOR_DEGREE,
+                Programme.LevelOfStudy.valueOf(programmeLevel),
                 programmeDepartment,
                 programmeDuration,
                 programmeIntake,
