@@ -11,7 +11,7 @@ import java.util.Iterator;
  *
  * @author yikso
  */
-public class DoubleLinkedList<T> implements ListInterface<T> {
+public class DoubleLinkedList<T> implements ListInterface<T>, Serializable {
 
     private int numberOfEntries;
     private Node firstNode;
@@ -96,7 +96,7 @@ public class DoubleLinkedList<T> implements ListInterface<T> {
         return numberOfEntries == 0;
     }
 
-    public class Node {
+    public class Node implements Serializable{
 
         private T data;
         private Node next;
