@@ -15,7 +15,7 @@ import java.util.Iterator;
 public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<T>, Serializable {
 
     private int numberOfEntries;
-    private Node firstNode;
+    private Node<T> firstNode;
 
     public DoubleLinkedList() {
         clear();
@@ -25,7 +25,7 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
     // Add new node by compareTo for sorting
     public boolean add(T newEntry) {
         // Create new node
-        Node newNode = new Node(newEntry);
+        Node<T> newNode = new Node<>(newEntry);
 
         // If the list is empty, or the new entry should be inserted at the beginning
         if (isEmpty() || newEntry.compareTo(firstNode.data) <= 0) {
@@ -34,7 +34,7 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
             firstNode = newNode;
         } else {
             // Find the correct position for sorting
-            Node currentNode = firstNode;
+            Node<T> currentNode = firstNode;
             while (currentNode.next != null && newEntry.compareTo(currentNode.next.data) > 0) {
                 currentNode = currentNode.next;
             }
@@ -53,7 +53,7 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
     // remove the entry 
     public T remove(T element) {
         if (contains(element) && getNumberOfEntries() != 0) {
-            Node currentNode = firstNode;
+            Node<T> currentNode = firstNode;
 
             // remove first element
             if (currentNode != null && currentNode.data.equals(element)) {
@@ -118,14 +118,14 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
 
     @Override
     public boolean isEmpty() {
-        return numberOfEntries == 0;
+        return getNumberOfEntries() == 0;
     }
 
-    public class Node implements Serializable {
+    public class Node<T> implements Serializable {
 
         private T data;
-        private Node next;
-        private Node prev;
+        private Node<T> next;
+        private Node<T> prev;
 
         private Node(T data) {
             this.data = data;
@@ -133,7 +133,7 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
             this.prev = null;
         }
 
-        private Node(T data, Node next) {
+        private Node(T data, Node<T> next) {
             this.data = data;
             this.next = next;
         }
@@ -161,7 +161,7 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
 
     public class DoubleLinkedListIterator implements Iterator<T> {
 
-        private Node currentNode;
+        private Node<T> currentNode;
 
         DoubleLinkedListIterator() {
             currentNode = firstNode;
@@ -169,7 +169,12 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
 
         @Override
         public boolean hasNext() {
+            System.out.println("no");
             return currentNode != null;
+        }
+
+        public boolean hasPrevious() {
+            return currentNode.prev != null;
         }
 
         @Override
@@ -182,9 +187,15 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
                 return null;
             }
         }
-    }
 
-    private boolean binarySearch(String first, String last, T desiredItem) {
-        return true;
+        public T previous() {
+            if (hasPrevious()) {
+                T returnNode = currentNode.data;
+                currentNode = currentNode.prev;
+                return returnNode;
+            } else {
+                return null;
+            }
+        }
     }
 }

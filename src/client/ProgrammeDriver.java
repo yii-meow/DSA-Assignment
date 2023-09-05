@@ -10,6 +10,7 @@ import entity.Programme;
 import entity.TutorialGroup;
 import java.util.InputMismatchException;
 import java.util.Iterator;
+import java.util.ListIterator;
 import java.util.Scanner;
 import utility.dummyData;
 
@@ -254,7 +255,7 @@ public class ProgrammeDriver {
     }
 
     private static boolean removeProgramme() {
-        System.out.print("Please enter the programme code: ");
+        System.out.print("Please enter the programme code : ");
         String programmeCode = scanner.next();
         programmeCode = programmeCode.toUpperCase();
 
@@ -277,7 +278,7 @@ public class ProgrammeDriver {
 
     // Find the programme, and provide the details of it
     private static Programme findProgramme() {
-        System.out.print("Please enter the programme code: ");
+        System.out.print("Please enter the programme code : ");
         String programmeCode = scanner.next();
         programmeCode = programmeCode.toUpperCase();
 
@@ -300,8 +301,7 @@ public class ProgrammeDriver {
 
         Iterator it = programmeList.getIterator();
 
-        System.out.println("\nFinding the programme....\n");
-
+//        System.out.println("\nFinding the programme....\n");
         while (it.hasNext() && !found) {
             result = (Programme) it.next();
             if (option == 1) {
@@ -344,6 +344,10 @@ public class ProgrammeDriver {
                 amendOption = scanner.nextInt();
             }
 
+            if (amendOption == -1) {
+                return;
+            }
+
             System.out.print("\nPrevious Details\n===============\nOld: ");
 
             switch (amendOption) {
@@ -352,42 +356,49 @@ public class ProgrammeDriver {
                     System.out.println("\n\nProgramme Level (1-3) : \n1. Diploma\n2. Bachelor Degree\n3. Master\n");
                     System.out.print("Amended Programme Level > ");
                     int option = scanner.nextInt();
-                    String programmeLevel = "";
+                    String newProgrammeLevel = "";
                     switch (option) {
                         case 1:
-                            programmeLevel = "DIPLOMA";
+                            newProgrammeLevel = "DIPLOMA";
                             break;
                         case 2:
-                            programmeLevel = "BACHELOR_DEGREE";
+                            newProgrammeLevel = "BACHELOR_DEGREE";
                             break;
                         case 3:
-                            programmeLevel = "MASTER";
+                            newProgrammeLevel = "MASTER";
                     }
-                    System.out.println(res.getProgrammeLevel() + " -> " + programmeLevel);
+                    System.out.println(res.getProgrammeLevel() + " -> " + newProgrammeLevel);
+                    res.setProgrammeLevel(Programme.LevelOfStudy.valueOf(newProgrammeLevel));
                     break;
                 case 2:
                     System.out.println(res.getDepartment());
                     System.out.print("Amended Department > ");
-                    String department = scanner.nextLine();
-                    System.out.println(res.getDepartment() + " -> " + department);
+                    scanner.nextLine();
+                    String newDepartment = scanner.nextLine();
+                    System.out.println(res.getDepartment() + " -> " + newDepartment);
+                    res.setDepartment(newDepartment);
                     break;
                 case 3:
                     System.out.println(res.getDuration());
                     System.out.print("Amended Programme Duration > ");
-                    int duration = scanner.nextInt();
-                    System.out.println(res.getDuration() + " -> " + duration);
+                    int newDuration = scanner.nextInt();
+                    System.out.println(res.getDuration() + " -> " + newDuration);
+                    res.setDuration(newDuration);
                     break;
                 case 4:
                     System.out.println(res.getIntake());
                     System.out.print("Amended Programme Intake > ");
-                    String intake = scanner.next();
-                    System.out.println(res.getIntake() + " -> " + intake);
+                    scanner.nextLine();
+                    String newIntake = scanner.next();
+                    System.out.println(res.getIntake() + " -> " + newIntake);
+                    res.setIntake(newIntake);
                     break;
                 case 5:
                     System.out.println(res.getFee());
                     System.out.print("Amended Programme Fee > ");
-                    Double fee = scanner.nextDouble();
-                    System.out.println(res.getFee() + " -> " + fee);
+                    Double newFee = scanner.nextDouble();
+                    System.out.println(res.getFee() + " -> " + newFee);
+                    res.setFee(newFee);
                     break;
                 case 6:
                     System.out.println(res.getTutorialGroup());
@@ -397,34 +408,99 @@ public class ProgrammeDriver {
                 case 7:
                     System.out.println(res.getDescription());
                     System.out.print("Amended Programme Description > ");
-                    String description = scanner.nextLine();
-                    System.out.println(res.getDescription() + " -> " + description);
+                    scanner.nextLine();
+                    String newDescription = scanner.nextLine();
+                    System.out.println(res.getDescription() + " -> " + newDescription);
+                    res.setDescription(newDescription);
             }
-            System.out.print("Confirm ? (Y/n) : ");
-            char option = scanner.next().toUpperCase().charAt(0);
-            if (option == 'Y') {
-                System.out.println("Amended.");
-            } else {
-                System.out.println("Cancelled operation.");
-            }
+//            System.out.print("Confirm ? (Y/n) : ");
+//            char option = scanner.next().toUpperCase().charAt(0);
+//            if (option == 'Y') {
+//                System.out.println("Amended.");
+//            } else {
+//                System.out.println("Cancelled operation.");
+//            }
         } else {
             System.out.println("Programme not found!");
         }
     }
 
     private static void listProgramme() {
-        // First way : Overview
-        System.out.println("-----------------\nProgramme Listing\n-----------------");
-        System.out.println(programmeList);
+        int option = 0;
 
-        // Second way : Specific (Click next / previous to check programme one by one)
-        Iterator it = programmeList.getIterator();
-        Programme res = (Programme) it.next();
-//        while(it.hasNext()){
-//            System.out.println(it.next().);
-//        }
+        do {
+            System.out.println("Listing way");
+            System.out.println("1. Overview of Programme");
+            System.out.println("2. Specific Programme");
+            System.out.print("3. One-by-One\n\n> ");
 
-        // Third way : Straight click on a programme and check the details without arrow function
+            option = scanner.nextInt();
+            System.out.println("\n-----------------\nProgramme Listing\n-----------------");
+
+            if (option == 1) {
+                // First way : Overview
+                Iterator it = programmeList.getIterator();
+
+                int index = 1;
+                while (it.hasNext()) {
+                    Programme programme = (Programme) it.next();
+                    System.out.println(index + ")");
+                    System.out.println(programme.getProgrammeCode());
+                    System.out.println(programme.getProgrammeName());
+                    System.out.println(programme.getProgrammeLevel());
+                    System.out.println(programme.getDepartment() + "\n");
+
+                    index += 1;
+                }
+
+                // Specific Program Details
+            } else if (option == 2) {
+                Iterator it = programmeList.getIterator();
+                while (it.hasNext()) {
+                    Programme programme = (Programme) it.next();
+                    System.out.println(programme.getProgrammeCode());
+                }
+
+                System.out.print("\nProgramme code > ");
+                String programmeCode = scanner.next();
+                System.out.println("");
+                programmeCode = programmeCode.toUpperCase();
+
+                Programme programme = programmeDetails(programmeCode, 1);
+
+                if (programme != null) {
+                    System.out.println(programme);
+                } else {
+                    System.out.println("Programme not found!");
+                }
+            } else if (option == 3) {
+                DoubleLinkedList.DoubleLinkedListIterator customIterator = (DoubleLinkedList.DoubleLinkedListIterator) programmeList.getIterator();
+                Programme programme = (Programme) customIterator.next();
+
+                while (customIterator.hasNext()) {
+                    System.out.println(programme);
+                    System.out.print("Continue (Y) / Previous (P) / Exit (E) > ");
+
+                    Character choice = scanner.next().toUpperCase().charAt(0);
+
+                    System.out.println("\n--------------------------------------------\n");
+
+                    if (choice == 'Y') {
+                        programme = (Programme) customIterator.next();
+                    } else if (choice == 'P') {
+                        // previous programme
+                        if (customIterator.hasPrevious()) {
+                            programme = (Programme) customIterator.previous();
+                        } else {
+                            System.out.println("No previous program available");
+                        }
+                    } else {
+                        break;
+                    }
+                }
+            }
+            System.out.print("Continue ? (Y/n) : ");
+        } while (scanner.next().toUpperCase().charAt(0) == 'Y');
     }
 
     private static void addGroupToProgramme() {
