@@ -14,7 +14,6 @@ import java.util.Iterator;
  */
 public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<T>, Serializable {
 
-    private int numberOfEntries;
     private Node firstNode;
 
     public DoubleLinkedList() {
@@ -45,10 +44,13 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
             // Insert the new node after currentNode
             newNode.next = currentNode.next;
             newNode.prev = currentNode;
+
+            if (currentNode.next != null) {
+                currentNode.next.prev = newNode; // Update the prev pointer of the next node
+            }
+
             currentNode.next = newNode;
         }
-
-        numberOfEntries++;
         return true;
     }
 
@@ -167,6 +169,11 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
             currentNode = firstNode;
         }
 
+        public Node getNext() {
+            System.out.println(currentNode.next);
+            return currentNode.next;
+        }
+
         @Override
         public boolean hasNext() {
             return currentNode != null;
@@ -180,7 +187,9 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
         public T next() {
             if (hasNext()) {
                 T returnNode = currentNode.data;
-                currentNode = currentNode.next;
+                if (currentNode.next != null) {
+                    currentNode = currentNode.next;
+                }
                 return returnNode;
             } else {
                 return null;
@@ -188,10 +197,8 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
         }
 
         public T previous() {
-            System.out.println(currentNode.prev);
-            System.out.println(((Programme) currentNode.prev.prev.data).getProgrammeCode() + "\n\n");
             if (hasPrevious()) {
-                T returnNode = currentNode.prev.prev.data;
+                T returnNode = currentNode.prev.data;
                 currentNode = currentNode.prev;
                 return returnNode;
             } else {
