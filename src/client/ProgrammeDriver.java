@@ -475,29 +475,62 @@ public class ProgrammeDriver {
                 }
             } else if (option == 3) {
                 DoubleLinkedList.DoubleLinkedListIterator customIterator = (DoubleLinkedList.DoubleLinkedListIterator) programmeList.getIterator();
+
+                System.out.println("1.\n\n");
+
                 Programme programme = (Programme) customIterator.next();
 
-                while (customIterator.hasNext()) {
-                    System.out.println(programme);
-                    System.out.print("Continue (Y) / Previous (P) / Exit (E) > ");
+                System.out.println(programme);
 
-                    Character choice = scanner.next().toUpperCase().charAt(0);
+                programme = (Programme) customIterator.next();
 
-                    System.out.println("\n--------------------------------------------\n");
+                System.out.println(programme);
 
-                    if (choice == 'Y') {
-                        programme = (Programme) customIterator.next();
-                    } else if (choice == 'P') {
-                        // previous programme
-                        if (customIterator.hasPrevious()) {
-                            programme = (Programme) customIterator.previous();
-                        } else {
-                            System.out.println("No previous program available");
-                        }
-                    } else {
-                        break;
-                    }
-                }
+                System.out.println("6.\n\n");
+
+                programme = (Programme) customIterator.next();
+
+                System.out.println(programme);
+
+                System.out.println("6.\n\n");
+
+                programme = (Programme) customIterator.next();
+
+                System.out.println(programme);
+
+                System.out.println("6.\n\n");
+
+                programme = (Programme) customIterator.previous();
+
+                System.out.println(programme);
+
+//                while (true) {
+//                    System.out.println(programme);
+//                    System.out.print("Continue (Y) / Previous (P) / Exit (E) > ");
+//
+//                    scanner.nextLine();
+//                    Character choice = scanner.next().toUpperCase().charAt(0);
+//
+//                    System.out.println("\n--------------------------------------------\n");
+//
+//                    if (choice == 'Y') {
+//                        if (customIterator.hasNext()) {
+//                            programme = (Programme) customIterator.next();
+//                        } else {
+//                            break;
+//                        }
+//                    } else if (choice == 'P') {
+//                        // previous programme
+//                        if (customIterator.hasPrevious()) {
+//                            System.out.println("hello\n\n\n\n");
+//                            programme = (Programme) customIterator.previous();
+//                        } else {
+//                            System.out.println("No previous program available");
+//                        }
+//                    } else {
+//                        break;
+//                    }
+//                }
             }
             System.out.print("Continue ? (Y/n) : ");
         } while (scanner.next().toUpperCase().charAt(0) == 'Y');

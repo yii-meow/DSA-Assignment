@@ -15,7 +15,7 @@ import java.util.Iterator;
 public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<T>, Serializable {
 
     private int numberOfEntries;
-    private Node<T> firstNode;
+    private Node firstNode;
 
     public DoubleLinkedList() {
         clear();
@@ -25,20 +25,23 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
     // Add new node by compareTo for sorting
     public boolean add(T newEntry) {
         // Create new node
-        Node<T> newNode = new Node<>(newEntry);
+        Node newNode = new Node(newEntry);
 
-        // If the list is empty, or the new entry should be inserted at the beginning
-        if (isEmpty() || newEntry.compareTo(firstNode.data) <= 0) {
+        // If the list is empty 
+        if (isEmpty()) {
+            firstNode = newNode;
+        } // if the new entry should be inserted at the beginning
+        else if (newEntry.compareTo(firstNode.data) <= 0) {
+            firstNode.prev = newNode;
             newNode.next = firstNode;
             newNode.prev = null;
             firstNode = newNode;
         } else {
             // Find the correct position for sorting
-            Node<T> currentNode = firstNode;
+            Node currentNode = firstNode;
             while (currentNode.next != null && newEntry.compareTo(currentNode.next.data) > 0) {
                 currentNode = currentNode.next;
             }
-
             // Insert the new node after currentNode
             newNode.next = currentNode.next;
             newNode.prev = currentNode;
@@ -53,7 +56,7 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
     // remove the entry 
     public T remove(T element) {
         if (contains(element) && getNumberOfEntries() != 0) {
-            Node<T> currentNode = firstNode;
+            Node currentNode = firstNode;
 
             // remove first element
             if (currentNode != null && currentNode.data.equals(element)) {
@@ -70,9 +73,7 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
             }
 
             if (currentNode != null) {
-                System.out.println("hello");
                 if (currentNode.prev != null) {
-                    System.out.println(currentNode.prev.next.data);
                     currentNode.prev.next = currentNode.next;
                 }
                 if (currentNode.next != null) {
@@ -87,7 +88,6 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
     @Override
     public void clear() {
         firstNode = null;
-        numberOfEntries = 0;
     }
 
     @Override
@@ -121,11 +121,11 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
         return getNumberOfEntries() == 0;
     }
 
-    public class Node<T> implements Serializable {
+    public class Node implements Serializable {
 
         private T data;
-        private Node<T> next;
-        private Node<T> prev;
+        private Node next;
+        private Node prev;
 
         private Node(T data) {
             this.data = data;
@@ -133,7 +133,7 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
             this.prev = null;
         }
 
-        private Node(T data, Node<T> next) {
+        private Node(T data, Node next) {
             this.data = data;
             this.next = next;
         }
@@ -161,7 +161,7 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
 
     public class DoubleLinkedListIterator implements Iterator<T> {
 
-        private Node<T> currentNode;
+        private Node currentNode;
 
         DoubleLinkedListIterator() {
             currentNode = firstNode;
@@ -169,7 +169,6 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
 
         @Override
         public boolean hasNext() {
-            System.out.println("no");
             return currentNode != null;
         }
 
@@ -189,8 +188,10 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
         }
 
         public T previous() {
+            System.out.println(currentNode.prev);
+            System.out.println(((Programme) currentNode.prev.prev.data).getProgrammeCode() + "\n\n");
             if (hasPrevious()) {
-                T returnNode = currentNode.data;
+                T returnNode = currentNode.prev.prev.data;
                 currentNode = currentNode.prev;
                 return returnNode;
             } else {
