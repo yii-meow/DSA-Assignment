@@ -14,8 +14,8 @@ import java.util.Objects;
 public class Programme implements Comparable<Programme>, Serializable {
 
     @Override
-    public int compareTo(Programme programme) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public int compareTo(Programme other) {
+        return this.programmeCode.compareTo(other.programmeCode);
     }
 
     public enum LevelOfStudy {
@@ -145,7 +145,7 @@ public class Programme implements Comparable<Programme>, Serializable {
         return "Programme Code : " + programmeCode + "\nProgramme Name : " + programmeName
                 + "\nProgramme Level : " + programmeLevel + "\nDepartment : " + department
                 + "\nDuration : " + duration + "\nIntake : " + intake + "\nProgramme Fee : RM " + String.format("%.2f", fee)
-                + "\n\nTutorial Group : " + tutorialGroup + "\n\nProgramme Description : " + description;
+                + "\n\nTutorial Group : " + tutorialGroup + "\n\nProgramme Description : " + description + "\n";
 
     }
 

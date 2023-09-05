@@ -111,9 +111,9 @@ public class ProgrammeDriver {
         }
 
         // Duplicated entry - programme code , ask for amend details?
-        if (programmeDetails(programmeCode) != null) {
+        if (programmeDetails(programmeCode, 1) != null) {
             System.out.println("The programme code " + programmeCode + " is existed.\nDo you want to amend details? (Y/n) : ");
-            if (scanner.next().equals("Y") || scanner.next().equals('y')) {
+            if (scanner.next().toUpperCase().charAt(0) == 'Y') {
                 amendProgramme();
             } else {
                 return;
@@ -123,9 +123,19 @@ public class ProgrammeDriver {
 
         // Programme Name is not allowed to have duplicated entry
         System.out.print("Programme Name: ");
-        scanner.next();
+        scanner.nextLine();
         String programmeName = scanner.nextLine();
         System.out.println("");
+
+        // Duplicated entry - programme name , ask for amend details?
+        if (programmeDetails(programmeCode, 2) != null) {
+            System.out.println("The programme name " + programmeCode + " is existed.\nDo you want to amend details? (Y/n) : ");
+            if (scanner.next().toUpperCase().charAt(0) == 'Y') {
+                amendProgramme();
+            } else {
+                return;
+            }
+        }
 
         // Programme Level
         int option = 0;
@@ -225,7 +235,6 @@ public class ProgrammeDriver {
         Programme programme = new Programme(
                 programmeCode,
                 programmeName,
-                // to change
                 Programme.LevelOfStudy.valueOf(programmeLevel),
                 programmeDepartment,
                 programmeDuration,
@@ -249,7 +258,7 @@ public class ProgrammeDriver {
         String programmeCode = scanner.next();
         programmeCode = programmeCode.toUpperCase();
 
-        Programme programmeToRemove = programmeDetails(programmeCode);
+        Programme programmeToRemove = programmeDetails(programmeCode, 1);
 
         if (programmeToRemove != null) {
             System.out.println("Are you sure to remove the program :" + programmeCode + " ?");
@@ -272,7 +281,7 @@ public class ProgrammeDriver {
         String programmeCode = scanner.next();
         programmeCode = programmeCode.toUpperCase();
 
-        Programme res = programmeDetails(programmeCode);
+        Programme res = programmeDetails(programmeCode, 1);
 
         if (res != null) {
             System.out.println("Here's the result...\n\n" + res);
@@ -284,7 +293,8 @@ public class ProgrammeDriver {
     }
 
     // Return the found programme
-    private static Programme programmeDetails(String programmeCode) {
+    // Option : 1 = Programme Code, 2 = Programme Name 
+    private static Programme programmeDetails(String details, int option) {
         Programme result = null;
         boolean found = false;
 
@@ -294,8 +304,14 @@ public class ProgrammeDriver {
 
         while (it.hasNext() && !found) {
             result = (Programme) it.next();
-            if (result.getProgrammeCode().equals(programmeCode)) {
-                return result;
+            if (option == 1) {
+                if (result.getProgrammeCode().equals(details)) {
+                    return result;
+                }
+            } else {
+                if (result.getProgrammeName().equals(details)) {
+                    return result;
+                }
             }
         }
 
@@ -375,7 +391,7 @@ public class ProgrammeDriver {
         // First way : Overview
         System.out.println("-----------------\nProgramme Listing\n-----------------");
         System.out.println(programmeList);
-        
+
         // Second way : Specific (Click next / previous to check programme one by one)
         Iterator it = programmeList.getIterator();
         Programme res = (Programme) it.next();

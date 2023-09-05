@@ -21,44 +21,31 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
     }
 
     @Override
-    // Add new node to the rear by default
+    // Add new node by compareTo for sorting
     public boolean add(T newEntry) {
-        // Avoid duplicate entry (programme Code & intake)
-        if (!contains(newEntry)) {
-            Node newNode = new Node(newEntry);
+        // Create new node
+        Node newNode = new Node(newEntry);
 
-            if (numberOfEntries == 0) {
-                firstNode = newNode;
-            } else {
-                Node currentNode = firstNode;
-                while (currentNode.next != null) {
-                    currentNode = currentNode.next;
-                }
-                currentNode.next = newNode;
-                newNode.prev = currentNode;
-            }
-            numberOfEntries++;
-            return true;
+        // If the list is empty, or the new entry should be inserted at the beginning
+        if (isEmpty() || newEntry.compareTo(firstNode.data) <= 0) {
+            newNode.next = firstNode;
+            firstNode = newNode;
         } else {
-            return false;
+            // Find the correct position for sorting
+            Node currentNode = firstNode;
+            while (currentNode.next != null && newEntry.compareTo(currentNode.next.data) > 0) {
+                currentNode = currentNode.next;
+            }
+
+            // Insert the new node after currentNode
+            newNode.next = currentNode.next;
+            currentNode.next = newNode;
         }
+
+        numberOfEntries++;
+        return true;
     }
 
-    // @Override
-    // Not working due to using Comparator / Sorting
-    // add new entry to any possible position
-//    public boolean add(int position, T newEntry) {
-//        Node newNode = new Node(newEntry);
-//
-//        if (position >= 1 && position <= numberOfEntries + 1) {
-//            
-//            return true;
-//        } else {
-//            System.out.println("Insuccessfully added the new entry due to invalid position");
-//            return false;
-//        }
-//
-//    }
     @Override
     // remove the entry based on the programme id
     public T remove(T element) {
