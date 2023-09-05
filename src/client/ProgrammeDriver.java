@@ -112,7 +112,7 @@ public class ProgrammeDriver {
 
         // Duplicated entry - programme code , ask for amend details?
         if (programmeDetails(programmeCode, 1) != null) {
-            System.out.println("The programme code " + programmeCode + " is existed.\nDo you want to amend details? (Y/n) : ");
+            System.out.print("The programme code " + programmeCode + " is existed.\nDo you want to amend details? (Y/n) : ");
             if (scanner.next().toUpperCase().charAt(0) == 'Y') {
                 amendProgramme();
             } else {
@@ -127,9 +127,9 @@ public class ProgrammeDriver {
         String programmeName = scanner.nextLine();
         System.out.println("");
 
-        // Duplicated entry - programme name , ask for amend details?
-        if (programmeDetails(programmeCode, 2) != null) {
-            System.out.println("The programme name " + programmeCode + " is existed.\nDo you want to amend details? (Y/n) : ");
+        // Duplicated entry - programme name , ask for amend details
+        if (programmeDetails(programmeName, 2) != null) {
+            System.out.print("The programme name " + programmeName + " is existed.\nDo you want to amend details? (Y/n) : ");
             if (scanner.next().toUpperCase().charAt(0) == 'Y') {
                 amendProgramme();
             } else {
@@ -323,19 +323,18 @@ public class ProgrammeDriver {
 
         if (res != null) {
             System.out.println("Which details to amemd ? (-1 to exit) *Programme Code is not allowed to be amend*");
-            System.out.println("1. Programme Name");
-            System.out.println("2. Programme Level");
-            System.out.println("3. Department");
-            System.out.println("4. Programme Duration");
-            System.out.println("5. Programme Intake");
-            System.out.println("6. Programme Fee");
-            System.out.println("7. Tutorial Group");
-            System.out.println("8. Programme Description");
+            System.out.println("1. Programme Level");
+            System.out.println("2. Department");
+            System.out.println("3. Programme Duration");
+            System.out.println("4. Programme Intake");
+            System.out.println("5. Programme Fee");
+            System.out.println("6. Tutorial Group");
+            System.out.println("7. Programme Description");
 
             int amendOption = scanner.nextInt();
 
-            while ((amendOption < 1 || amendOption > 8) && amendOption != -1) {
-                System.out.println("Please enter a valid choice! (choose from 1-8 or -1 to exit)");
+            while ((amendOption < 1 || amendOption > 7) && amendOption != -1) {
+                System.out.println("Please enter a valid choice! (choose from 1-7 or -1 to exit)");
                 amendOption = scanner.nextInt();
             }
 
@@ -343,34 +342,30 @@ public class ProgrammeDriver {
 
             switch (amendOption) {
                 case 1:
-                    System.out.println(res.getProgrammeName());
-                    System.out.println("Amended Programme Name > ");
-                    break;
-                case 2:
                     System.out.println(res.getProgrammeLevel());
                     System.out.println("Amended Programme Level > ");
                     break;
-                case 3:
+                case 2:
                     System.out.println(res.getDepartment());
                     System.out.println("Amended Department > ");
                     break;
-                case 4:
+                case 3:
                     System.out.println(res.getDuration());
                     System.out.println("Amended Programme Duration > ");
                     break;
-                case 5:
+                case 4:
                     System.out.println(res.getIntake());
                     System.out.println("Amended Programme Intake > ");
                     break;
-                case 6:
+                case 5:
                     System.out.println(res.getFee());
                     System.out.println("Amended Programme Fee > ");
                     break;
-                case 7:
+                case 6:
                     System.out.println(res.getTutorialGroup());
                     System.out.println("Amended Tutorial Group > ");
                     break;
-                case 8:
+                case 7:
                     System.out.println(res.getDescription());
                     System.out.println("Amended Programme Description > ");
             }
