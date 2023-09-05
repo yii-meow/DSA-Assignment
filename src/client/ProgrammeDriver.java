@@ -62,7 +62,7 @@ public class ProgrammeDriver {
                         findProgramme();
                         break;
                     case 4:
-                        amendProgramme();
+                        amendProgramme(null);
                         break;
                     case 5:
                         listProgramme();
@@ -114,7 +114,7 @@ public class ProgrammeDriver {
         if (programmeDetails(programmeCode, 1) != null) {
             System.out.print("The programme code " + programmeCode + " is existed.\nDo you want to amend details? (Y/n) : ");
             if (scanner.next().toUpperCase().charAt(0) == 'Y') {
-                amendProgramme();
+                amendProgramme(programmeCode);
             } else {
                 return;
             }
@@ -131,7 +131,7 @@ public class ProgrammeDriver {
         if (programmeDetails(programmeName, 2) != null) {
             System.out.print("The programme name " + programmeName + " is existed.\nDo you want to amend details? (Y/n) : ");
             if (scanner.next().toUpperCase().charAt(0) == 'Y') {
-                amendProgramme();
+                amendProgramme(programmeDetails(programmeName, 2).getProgrammeCode());
             } else {
                 return;
             }
@@ -261,7 +261,7 @@ public class ProgrammeDriver {
         Programme programmeToRemove = programmeDetails(programmeCode, 1);
 
         if (programmeToRemove != null) {
-            System.out.println("Are you sure to remove the program :" + programmeCode + " ?");
+            System.out.println("Are you sure to remove the program : " + programmeCode + " (Y/n) ? ");
             if (scanner.next().toUpperCase().charAt(0) == 'Y') {
                 if (programmeList.remove(programmeToRemove) != null) {
                     System.out.println("Successfully removed the program.");
@@ -314,15 +314,20 @@ public class ProgrammeDriver {
                 }
             }
         }
-
         return null;
     }
 
-    private static void amendProgramme() {
-        Programme res = findProgramme();
+    private static void amendProgramme(String programmeCode) {
+        Programme res = null;
+        if (programmeCode == null) {
+            res = findProgramme();
+        } else {
+            res = programmeDetails(programmeCode, 1);
+            System.out.println(res);
+        }
 
         if (res != null) {
-            System.out.println("Which details to amemd ? (-1 to exit) *Programme Code is not allowed to be amend*");
+            System.out.println("Which details to amemd ? (-1 to exit)\n*Programme Code and Name is not allowed to be amended*\n");
             System.out.println("1. Programme Level");
             System.out.println("2. Department");
             System.out.println("3. Programme Duration");
@@ -330,6 +335,7 @@ public class ProgrammeDriver {
             System.out.println("5. Programme Fee");
             System.out.println("6. Tutorial Group");
             System.out.println("7. Programme Description");
+            System.out.print("\n> ");
 
             int amendOption = scanner.nextInt();
 
@@ -338,39 +344,64 @@ public class ProgrammeDriver {
                 amendOption = scanner.nextInt();
             }
 
-            System.out.println("Previous Details :");
+            System.out.print("\nPrevious Details\n===============\nOld: ");
 
             switch (amendOption) {
                 case 1:
-                    System.out.println(res.getProgrammeLevel());
-                    System.out.println("Amended Programme Level > ");
+                    System.out.print(res.getProgrammeLevel());
+                    System.out.println("\n\nProgramme Level (1-3) : \n1. Diploma\n2. Bachelor Degree\n3. Master\n");
+                    System.out.print("Amended Programme Level > ");
+                    int option = scanner.nextInt();
+                    String programmeLevel = "";
+                    switch (option) {
+                        case 1:
+                            programmeLevel = "DIPLOMA";
+                            break;
+                        case 2:
+                            programmeLevel = "BACHELOR_DEGREE";
+                            break;
+                        case 3:
+                            programmeLevel = "MASTER";
+                    }
+                    System.out.println(res.getProgrammeLevel() + " -> " + programmeLevel);
                     break;
                 case 2:
                     System.out.println(res.getDepartment());
-                    System.out.println("Amended Department > ");
+                    System.out.print("Amended Department > ");
+                    String department = scanner.nextLine();
+                    System.out.println(res.getDepartment() + " -> " + department);
                     break;
                 case 3:
                     System.out.println(res.getDuration());
-                    System.out.println("Amended Programme Duration > ");
+                    System.out.print("Amended Programme Duration > ");
+                    int duration = scanner.nextInt();
+                    System.out.println(res.getDuration() + " -> " + duration);
                     break;
                 case 4:
                     System.out.println(res.getIntake());
-                    System.out.println("Amended Programme Intake > ");
+                    System.out.print("Amended Programme Intake > ");
+                    String intake = scanner.next();
+                    System.out.println(res.getIntake() + " -> " + intake);
                     break;
                 case 5:
                     System.out.println(res.getFee());
-                    System.out.println("Amended Programme Fee > ");
+                    System.out.print("Amended Programme Fee > ");
+                    Double fee = scanner.nextDouble();
+                    System.out.println(res.getFee() + " -> " + fee);
                     break;
                 case 6:
                     System.out.println(res.getTutorialGroup());
-                    System.out.println("Amended Tutorial Group > ");
+                    System.out.print("Amended Tutorial Group > ");
+                    // Choose from list
                     break;
                 case 7:
                     System.out.println(res.getDescription());
-                    System.out.println("Amended Programme Description > ");
+                    System.out.print("Amended Programme Description > ");
+                    String description = scanner.nextLine();
+                    System.out.println(res.getDescription() + " -> " + description);
             }
-            System.out.println("\n\nxxx -> yyy \nConfirm ? (Y/n) : _\b");
-            char option = scanner.next().charAt(0);
+            System.out.print("Confirm ? (Y/n) : ");
+            char option = scanner.next().toUpperCase().charAt(0);
             if (option == 'Y') {
                 System.out.println("Amended.");
             } else {
@@ -379,7 +410,6 @@ public class ProgrammeDriver {
         } else {
             System.out.println("Programme not found!");
         }
-
     }
 
     private static void listProgramme() {

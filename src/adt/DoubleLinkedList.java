@@ -4,6 +4,7 @@
  */
 package adt;
 
+import entity.Programme;
 import java.io.Serializable;
 import java.util.Iterator;
 
@@ -29,6 +30,7 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
         // If the list is empty, or the new entry should be inserted at the beginning
         if (isEmpty() || newEntry.compareTo(firstNode.data) <= 0) {
             newNode.next = firstNode;
+            newNode.prev = null;
             firstNode = newNode;
         } else {
             // Find the correct position for sorting
@@ -39,6 +41,7 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
 
             // Insert the new node after currentNode
             newNode.next = currentNode.next;
+            newNode.prev = currentNode;
             currentNode.next = newNode;
         }
 
@@ -47,23 +50,36 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
     }
 
     @Override
-    // remove the entry based on the programme id
+    // remove the entry 
     public T remove(T element) {
-        if (contains(element)) {
+        if (contains(element) && getNumberOfEntries() != 0) {
             Node currentNode = firstNode;
-            while (currentNode.next != null && currentNode.data != element) {
+
+            // remove first element
+            if (currentNode != null && currentNode.data.equals(element)) {
+                firstNode = currentNode.next;
+
+                if (firstNode != null) {
+                    firstNode.prev = null;
+                }
+                return currentNode.data;
+            }
+
+            while (currentNode != null && !currentNode.data.equals(element)) {
                 currentNode = currentNode.next;
             }
-            // Remove the only element
-            if (getNumberOfEntries() == 1) {
-                clear();
-            } // Remove the first element
-            else if (currentNode.prev == null) {
-                firstNode = currentNode.next;
-            } else {
-                currentNode.prev.next = currentNode.next;
+
+            if (currentNode != null) {
+                System.out.println("hello");
+                if (currentNode.prev != null) {
+                    System.out.println(currentNode.prev.next.data);
+                    currentNode.prev.next = currentNode.next;
+                }
+                if (currentNode.next != null) {
+                    currentNode.next.prev = currentNode.prev;
+                }
             }
-            return (T) currentNode;
+            return currentNode.data;
         }
         return null;
     }
@@ -92,6 +108,7 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
     }
 
 //    @Override
+    // Recursively loop through every node and get the total number of nodes
     public int getNumberOfEntries(Node node) {
         if (node == null) {
             return 0;
@@ -165,6 +182,9 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
                 return null;
             }
         }
+    }
 
+    private boolean binarySearch(String first, String last, T desiredItem) {
+        return true;
     }
 }
