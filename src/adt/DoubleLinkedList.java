@@ -170,7 +170,6 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
         }
 
         public Node getNext() {
-            System.out.println(currentNode.next);
             return currentNode.next;
         }
 
@@ -187,9 +186,7 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
         public T next() {
             if (hasNext()) {
                 T returnNode = currentNode.data;
-                if (currentNode.next != null) {
-                    currentNode = currentNode.next;
-                }
+                currentNode = currentNode.next;
                 return returnNode;
             } else {
                 return null;

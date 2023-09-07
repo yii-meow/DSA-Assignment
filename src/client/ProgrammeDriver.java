@@ -481,28 +481,37 @@ public class ProgrammeDriver {
                 while (true) {
                     lastChoice = choice;
                     System.out.println(programme);
-                    System.out.print("Continue (Y) / Previous (P) / Exit (E) > ");
+                    System.out.print("Next Programme (N) / Previous Programme (P) / Exit (E) > ");
                     choice = scanner.next().toUpperCase().charAt(0);
-
-                    System.out.println(lastChoice + "&&&" + choice);
 
                     System.out.println("\n--------------------------------------------\n");
 
-                    if (choice == 'Y') {
-                        if (lastChoice == 'P') {
-                            // Two step forwards
-                            programme = (Programme) customIterator.next();
-                        }
-                        if (customIterator.hasNext()) {
-                            programme = (Programme) customIterator.next();
+                    if (choice == 'N') {
+                        if (customIterator.getNext() == null) {
+                            System.out.println(customIterator);
+                            continue;
                         } else {
-                            break;
+                            if (lastChoice == 'P') {
+                                // Two step backward for pointer
+                                programme = (Programme) customIterator.next();
+                            }
+                            if (customIterator.hasNext()) {
+                                programme = (Programme) customIterator.next();
+                            } else {
+                                break;
+                            }
                         }
+                        // Iterate to the last element
+//                        if (customIterator.getNext() == null) {
+////                            programme = (Programme) customIterator.next();
+//                        } else {
+
+//                        }
                     } else if (choice == 'P') {
                         // previous programme
                         // Todo: Modify here so that the last element can go to previous element
-                        if (lastChoice == 'Y') {
-                            // Two step backwards
+                        if (lastChoice == 'N') {
+                            // Two step forward for pointer
                             programme = (Programme) customIterator.previous();
                         }
                         if (customIterator.hasPrevious()) {
@@ -520,18 +529,39 @@ public class ProgrammeDriver {
     }
 
     private static void addGroupToProgramme() {
+        System.out.print("\nWhich programme you are looking for ? \n Programme Code : ");
+        String programmeToAddGroup = scanner.next();
+
+        if (programmeDetails(programmeToAddGroup, 1) != null) {
+            System.out.println("Which group would you like to add to the programme ?");
+
+        }
+
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     private static void removeGroupFromProgramme() {
+        System.out.print("\nWhich programme you are looking for ? \n Programme Code : ");
+        String programmeToAddGroup = scanner.next();
+
+        if (programmeDetails(programmeToAddGroup, 1) != null) {
+            System.out.println("Which group would you like to add to the programme ?");
+
+        }
+
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     private static void listGroupFromProgramme() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        System.out.print("\nWhich programme you are looking for ? \n Programme Code : ");
+        String programmeToAddGroup = scanner.next();
+
+        if (programmeDetails(programmeToAddGroup, 1) != null) {
+
+        }
     }
 
     private static void generateReport() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+
     }
 }
