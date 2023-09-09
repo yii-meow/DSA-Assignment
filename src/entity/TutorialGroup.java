@@ -22,7 +22,7 @@ public class TutorialGroup implements Serializable, Comparable<TutorialGroup> {
 
     }
 
-    public TutorialGroup(String programmeCode,int groupNumber, int numberOfStudents, int yearOfStudy, int semesterOfStudy) {
+    public TutorialGroup(String programmeCode, int groupNumber, int numberOfStudents, int yearOfStudy, int semesterOfStudy) {
         this.programmeCode = programmeCode;
         this.groupNumber = groupNumber;
         this.numberOfStudents = numberOfStudents;
@@ -94,7 +94,7 @@ public class TutorialGroup implements Serializable, Comparable<TutorialGroup> {
 
     @Override
     public String toString() {
-        return "TutorialGroup{" + "groupNumber=" + groupNumber + ", numberOfStudents=" + numberOfStudents + ", yearOfStudy=" + yearOfStudy + ", semesterOfStudy=" + semesterOfStudy + '}';
+        return "Programme: " + programmeCode + "\nTutorial Group Number : " + groupNumber + "\nNumber of Student: " + numberOfStudents + "\nYear of Study: " + yearOfStudy + "\nSemester of Study: " + semesterOfStudy;
     }
 
     @Override

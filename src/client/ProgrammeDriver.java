@@ -481,14 +481,6 @@ public class ProgrammeDriver {
                     return;
                 }
 
-//                programme = (Programme) customIterator.next();
-//                programme = (Programme) customIterator.next();
-//                System.out.println(programme.getProgrammeCode());
-
-                System.out.println("\n\n\n");
-
-//                System.out.println(customIterator.getNext());
-//                System.out.println((Programme) (customIterator.last()));
                 Character lastChoice = 'N'; // variable to check whether it need to do two step forward or backward
                 Character choice = 'N';
 
@@ -513,7 +505,6 @@ public class ProgrammeDriver {
                         if (customIterator.hasPrevious()) {
                             programme = (Programme) customIterator.previous();
                         }
-                        // Todo: Modify here so that the last element can go to previous element
                         if (lastChoice == 'N') {
                             // Two step forward for pointer
                             programme = (Programme) customIterator.previous();
@@ -532,9 +523,16 @@ public class ProgrammeDriver {
         String programmeToAddGroup = scanner.next();
         Programme targetProgramme = programmeDetails(programmeToAddGroup, 1);
 
+        // if programme exists
         if (targetProgramme != null) {
-            // To do
-            targetProgramme.setTutorialGroup(null);
+            DoubleLinkedList<TutorialGroup> updatedGroup = targetProgramme.getTutorialGroup();
+
+            // List out the tutorial groups by retrieving all the tutorial groups using utility function
+            // Choose a tutorial group
+            // add the tutorial group to programme
+            updatedGroup.add(null);
+
+            targetProgramme.setTutorialGroup(updatedGroup);
         }
     }
 
@@ -544,18 +542,23 @@ public class ProgrammeDriver {
         Programme targetProgramme = programmeDetails(programmeToRemoveGroup, 1);
 
         if (targetProgramme != null) {
-            System.out.println("Which group would you like to add to the programme ?");
+            DoubleLinkedList<TutorialGroup> updatedGroup = targetProgramme.getTutorialGroup();
 
+            // List out the tutorial groups using the listGroupFromProgramme()
+            // Choose a tutorial group
+            // remove the tutorial group to programme
+            updatedGroup.remove(null);
         }
-
     }
 
     private static void listGroupFromProgramme() {
         System.out.print("\nWhich programme you are looking for ? \n Programme Code : ");
-        String programmeToListGroup = scanner.next();
+        String programmeForListingGroup = scanner.next();
+        Programme targetProgramme = programmeDetails(programmeForListingGroup, 1);
 
-        if (programmeDetails(programmeToListGroup, 1) != null) {
-
+        if (targetProgramme != null) {
+            DoubleLinkedList<TutorialGroup> group = targetProgramme.getTutorialGroup();
+            System.out.println(group);
         }
     }
 
