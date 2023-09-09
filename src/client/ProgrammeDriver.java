@@ -88,7 +88,6 @@ public class ProgrammeDriver {
                 choice = 0;
             }
             System.out.print("Do you want to continue ? (Y/n) : ");
-            scanner.nextLine();
         } while ((choice > 0 && choice <= 9) && scanner.next().toUpperCase().charAt(0) == 'Y');
 
         System.out.println("\nQuiting...\nThank you for using this system.");
@@ -119,7 +118,6 @@ public class ProgrammeDriver {
                 return;
             }
         }
-        System.out.println("Programme Code is valid!\n");
 
         // Programme Name is not allowed to have duplicated entry
         System.out.print("Programme Name: ");
@@ -240,7 +238,8 @@ public class ProgrammeDriver {
                 programmeDuration,
                 programmeIntake,
                 programmeFee,
-                new TutorialGroup(),
+                new DoubleLinkedList(),
+                //                new TutorialGroup(),
                 description
         );
 
@@ -475,7 +474,14 @@ public class ProgrammeDriver {
             } else if (option == 3) {
                 DoubleLinkedList.DoubleLinkedListIterator customIterator = (DoubleLinkedList.DoubleLinkedListIterator) programmeList.getIterator();
                 Programme programme = (Programme) customIterator.next();
-                Character lastChoice = 'Y';
+                
+                // If there is no programme, quit listing
+                if (programme == null) {
+                    System.out.println("There is no programme available");
+                    return;
+                }
+                
+                Character lastChoice = 'Y'; // variable to check whether it need to do two step forward or backward
                 Character choice = 'Y';
                 while (true) {
                     lastChoice = choice;
@@ -486,26 +492,22 @@ public class ProgrammeDriver {
                     System.out.println("\n--------------------------------------------\n");
 
                     if (choice == 'N') {
-                        if (customIterator.getNext() == null) {
-                            System.out.println(customIterator);
-                            continue;
+                        if (lastChoice == 'P') {
+                            // Two step backward for pointer
+                            programme = (Programme) customIterator.next();
+                        }
+                        if (customIterator.hasNext()) {
+                            programme = (Programme) customIterator.next();
                         } else {
-                            if (lastChoice == 'P') {
-                                // Two step backward for pointer
-                                programme = (Programme) customIterator.next();
-                            }
-                            if (customIterator.hasNext()) {
-                                programme = (Programme) customIterator.next();
-                            } else {
-                                break;
-                            }
+                            System.out.println("???");
+                            break;
                         }
                         // Iterate to the last element
-//                        if (customIterator.getNext() == null) {
-////                            programme = (Programme) customIterator.next();
-//                        } else {
-
-//                        }
+                        if (customIterator.getNext() == null) {
+                            System.out.println("last");
+                        } else {
+                            System.out.println("Not last");
+                        }
                     } else if (choice == 'P') {
                         // previous programme
                         // Todo: Modify here so that the last element can go to previous element
@@ -523,7 +525,7 @@ public class ProgrammeDriver {
                     }
                 }
             }
-            System.out.print("Continue ? (Y/n) : ");
+            System.out.print("Do you want to continue listing program? (Y/n) : ");
         } while (scanner.next().toUpperCase().charAt(0) == 'Y');
     }
 

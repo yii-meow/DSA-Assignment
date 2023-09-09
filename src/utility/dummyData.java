@@ -140,13 +140,14 @@ public class dummyData {
                             Integer.parseInt(parts[4]),
                             parts[5],
                             Double.parseDouble(parts[6]),
-                            new TutorialGroup(
-                                    parts[7],
-                                    Integer.parseInt(parts[8]),
-                                    Integer.parseInt(parts[9]),
-                                    Integer.parseInt(parts[10]),
-                                    Integer.parseInt(parts[11])
-                            ),
+                            null,
+//                            new TutorialGroup(
+//                                    parts[7],
+//                                    Integer.parseInt(parts[8]),
+//                                    Integer.parseInt(parts[9]),
+//                                    Integer.parseInt(parts[10]),
+//                                    Integer.parseInt(parts[11])
+//                            ),
                             parts[12]
                     );
                     programmeList.add(programme);
