@@ -474,15 +474,15 @@ public class ProgrammeDriver {
             } else if (option == 3) {
                 DoubleLinkedList.DoubleLinkedListIterator customIterator = (DoubleLinkedList.DoubleLinkedListIterator) programmeList.getIterator();
                 Programme programme = (Programme) customIterator.next();
-                
+
                 // If there is no programme, quit listing
                 if (programme == null) {
-                    System.out.println("There is no programme available");
+                    System.out.println("There is no programme available to show");
                     return;
                 }
-                
-                Character lastChoice = 'Y'; // variable to check whether it need to do two step forward or backward
-                Character choice = 'Y';
+
+                Character lastChoice = 'N'; // variable to check whether it need to do two step forward or backward
+                Character choice = 'N';
                 while (true) {
                     lastChoice = choice;
                     System.out.println(programme);
@@ -492,22 +492,32 @@ public class ProgrammeDriver {
                     System.out.println("\n--------------------------------------------\n");
 
                     if (choice == 'N') {
-                        if (lastChoice == 'P') {
-                            // Two step backward for pointer
+                        if (customIterator.getNext() == null) {
+                            // to do
                             programme = (Programme) customIterator.next();
+
+                            System.out.println(programme.getProgrammeCode());
                         }
                         if (customIterator.hasNext()) {
                             programme = (Programme) customIterator.next();
                         } else {
-                            System.out.println("???");
-                            break;
+                            programme = (Programme) customIterator.previous();
                         }
+                        if (lastChoice == 'P') {
+                            // Two step backward for pointer
+                            programme = (Programme) customIterator.next();
+                        }
+//                        if (customIterator.hasNext()) {
+//                            programme = (Programme) customIterator.next();
+//                        } else {
+//                            break;
+//                        }
                         // Iterate to the last element
-                        if (customIterator.getNext() == null) {
-                            System.out.println("last");
-                        } else {
-                            System.out.println("Not last");
-                        }
+////                        if (customIterator.getNext() == null) {
+//////                            programme = (Programme) customIterator.next();
+////                        } else {
+//
+////                        }
                     } else if (choice == 'P') {
                         // previous programme
                         // Todo: Modify here so that the last element can go to previous element
