@@ -481,8 +481,17 @@ public class ProgrammeDriver {
                     return;
                 }
 
+//                programme = (Programme) customIterator.next();
+//                programme = (Programme) customIterator.next();
+//                System.out.println(programme.getProgrammeCode());
+
+                System.out.println("\n\n\n");
+
+//                System.out.println(customIterator.getNext());
+//                System.out.println((Programme) (customIterator.last()));
                 Character lastChoice = 'N'; // variable to check whether it need to do two step forward or backward
                 Character choice = 'N';
+
                 while (true) {
                     lastChoice = choice;
                     System.out.println(programme);
@@ -492,43 +501,22 @@ public class ProgrammeDriver {
                     System.out.println("\n--------------------------------------------\n");
 
                     if (choice == 'N') {
-                        if (customIterator.getNext() == null) {
-                            // to do
-                            programme = (Programme) customIterator.next();
-
-                            System.out.println(programme.getProgrammeCode());
-                        }
                         if (customIterator.hasNext()) {
                             programme = (Programme) customIterator.next();
-                        } else {
-                            programme = (Programme) customIterator.previous();
                         }
                         if (lastChoice == 'P') {
                             // Two step backward for pointer
                             programme = (Programme) customIterator.next();
                         }
-//                        if (customIterator.hasNext()) {
-//                            programme = (Programme) customIterator.next();
-//                        } else {
-//                            break;
-//                        }
-                        // Iterate to the last element
-////                        if (customIterator.getNext() == null) {
-//////                            programme = (Programme) customIterator.next();
-////                        } else {
-//
-////                        }
                     } else if (choice == 'P') {
                         // previous programme
+                        if (customIterator.hasPrevious()) {
+                            programme = (Programme) customIterator.previous();
+                        }
                         // Todo: Modify here so that the last element can go to previous element
                         if (lastChoice == 'N') {
                             // Two step forward for pointer
                             programme = (Programme) customIterator.previous();
-                        }
-                        if (customIterator.hasPrevious()) {
-                            programme = (Programme) customIterator.previous();
-                        } else {
-                            System.out.println("No previous program available");
                         }
                     } else {
                         break;

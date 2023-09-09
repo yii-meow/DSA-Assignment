@@ -164,13 +164,11 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
     public class DoubleLinkedListIterator implements Iterator<T> {
 
         private Node currentNode;
+        private Node lastNode;
 
         DoubleLinkedListIterator() {
             currentNode = firstNode;
-        }
-
-        public Node getNext() {
-            return currentNode.next;
+            lastNode = null;
         }
 
         @Override
@@ -178,28 +176,27 @@ public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<
             return currentNode != null;
         }
 
-        public boolean hasPrevious() {
-            return currentNode.prev != null;
-        }
-
         @Override
         public T next() {
             if (hasNext()) {
                 T returnNode = currentNode.data;
-                if (currentNode.next != null) {
-                    currentNode = currentNode.next;
-                }
+                lastNode = currentNode; // Store the last node visited
+                currentNode = currentNode.next;
                 return returnNode;
             } else {
                 return null;
             }
         }
 
+        public boolean hasPrevious() {
+            return lastNode != null;
+        }
+
         public T previous() {
             if (hasPrevious()) {
-                T returnNode = currentNode.prev.data;
-                currentNode = currentNode.prev;
-                return returnNode;
+                currentNode = lastNode; // Move back to the last node visited
+                lastNode = currentNode.prev; // Update the last node to the previous one
+                return currentNode.data;
             } else {
                 return null;
             }
