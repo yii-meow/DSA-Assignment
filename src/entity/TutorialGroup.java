@@ -10,7 +10,7 @@ import java.io.Serializable;
  *
  * @author yikso
  */
-public class TutorialGroup implements Serializable {
+public class TutorialGroup implements Serializable, Comparable<TutorialGroup> {
 
     private String programmeCode;
     private int groupNumber;
@@ -95,6 +95,11 @@ public class TutorialGroup implements Serializable {
     @Override
     public String toString() {
         return "TutorialGroup{" + "groupNumber=" + groupNumber + ", numberOfStudents=" + numberOfStudents + ", yearOfStudy=" + yearOfStudy + ", semesterOfStudy=" + semesterOfStudy + '}';
+    }
+
+    @Override
+    public int compareTo(TutorialGroup o) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

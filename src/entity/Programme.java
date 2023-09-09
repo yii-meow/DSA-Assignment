@@ -4,6 +4,7 @@
  */
 package entity;
 
+import adt.DoubleLinkedList;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -12,11 +13,6 @@ import java.util.Objects;
  * @author yikso
  */
 public class Programme implements Comparable<Programme>, Serializable {
-
-    @Override
-    public int compareTo(Programme other) {
-        return this.programmeCode.compareTo(other.programmeCode);
-    }
 
     public enum LevelOfStudy {
         DIPLOMA,
@@ -31,10 +27,10 @@ public class Programme implements Comparable<Programme>, Serializable {
     private int duration;
     private String intake;
     private double fee;
-    private TutorialGroup tutorialGroup;
+    private DoubleLinkedList<TutorialGroup> tutorialGroup;
     private String description;
 
-    public Programme(String programmeCode, String programmeName, LevelOfStudy programmeLevel, String department, int duration, String intake, double fee, TutorialGroup tutorialGroup, String description) {
+    public Programme(String programmeCode, String programmeName, LevelOfStudy programmeLevel, String department, int duration, String intake, double fee, DoubleLinkedList<TutorialGroup> tutorialGroup, String description) {
         this.programmeCode = programmeCode;
         this.programmeName = programmeName;
         this.programmeLevel = programmeLevel;
@@ -102,11 +98,11 @@ public class Programme implements Comparable<Programme>, Serializable {
         this.fee = fee;
     }
 
-    public TutorialGroup getTutorialGroup() {
+    public DoubleLinkedList<TutorialGroup> getTutorialGroup() {
         return tutorialGroup;
     }
 
-    public void setTutorialGroup(TutorialGroup tutorialGroup) {
+    public void setTutorialGroup(DoubleLinkedList<TutorialGroup> tutorialGroup) {
         this.tutorialGroup = tutorialGroup;
     }
 
@@ -138,6 +134,11 @@ public class Programme implements Comparable<Programme>, Serializable {
         }
         final Programme other = (Programme) obj;
         return Objects.equals(this.programmeCode, other.programmeCode);
+    }
+
+    @Override
+    public int compareTo(Programme other) {
+        return this.programmeCode.compareTo(other.programmeCode);
     }
 
     @Override

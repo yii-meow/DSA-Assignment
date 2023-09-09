@@ -10,7 +10,6 @@ import entity.Programme;
 import entity.TutorialGroup;
 import java.util.InputMismatchException;
 import java.util.Iterator;
-import java.util.ListIterator;
 import java.util.Scanner;
 import utility.dummyData;
 
@@ -531,32 +530,31 @@ public class ProgrammeDriver {
     private static void addGroupToProgramme() {
         System.out.print("\nWhich programme you are looking for ? \n Programme Code : ");
         String programmeToAddGroup = scanner.next();
+        Programme targetProgramme = programmeDetails(programmeToAddGroup, 1);
 
-        if (programmeDetails(programmeToAddGroup, 1) != null) {
-            System.out.println("Which group would you like to add to the programme ?");
-
+        if (targetProgramme != null) {
+            // To do
+            targetProgramme.setTutorialGroup(null);
         }
-
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     private static void removeGroupFromProgramme() {
         System.out.print("\nWhich programme you are looking for ? \n Programme Code : ");
-        String programmeToAddGroup = scanner.next();
+        String programmeToRemoveGroup = scanner.next();
+        Programme targetProgramme = programmeDetails(programmeToRemoveGroup, 1);
 
-        if (programmeDetails(programmeToAddGroup, 1) != null) {
+        if (targetProgramme != null) {
             System.out.println("Which group would you like to add to the programme ?");
 
         }
 
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     private static void listGroupFromProgramme() {
         System.out.print("\nWhich programme you are looking for ? \n Programme Code : ");
-        String programmeToAddGroup = scanner.next();
+        String programmeToListGroup = scanner.next();
 
-        if (programmeDetails(programmeToAddGroup, 1) != null) {
+        if (programmeDetails(programmeToListGroup, 1) != null) {
 
         }
     }
