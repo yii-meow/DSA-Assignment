@@ -24,12 +24,14 @@ public class ProgrammeDriver {
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        initializeData();
+        menu();
+    }
+
+    public static void initializeData() {
         // retrieve existing data
         programmeList = dummyData.initializeProgrammeData();
         tutorialGroupList = dummyData.initializeTutorialGroupData();
-
-        menu();
-
     }
 
     private static void menu() {
@@ -118,9 +120,8 @@ public class ProgrammeDriver {
             System.out.print("The programme code " + programmeCode + " is existed.\nDo you want to amend details? (Y/n) : ");
             if (scanner.next().toUpperCase().charAt(0) == 'Y') {
                 amendProgramme(programmeCode);
-            } else {
-                return;
             }
+            return;
         }
 
         // Programme Name is not allowed to have duplicated entry
@@ -223,16 +224,14 @@ public class ProgrammeDriver {
 
         System.out.println("");
 
-        // Let user choose from a list
-//        System.out.print("Tutorial Group: ");
-        TutorialGroup tutorialGroup = null;
-//        System.out.println("");
-
         // Description
         System.out.print("Programme Description: ");
         scanner.nextLine();
         String description = scanner.nextLine();
         System.out.println("");
+
+        // initialize to be null tutorial group
+        DoublyLinkedList<TutorialGroup> tutorialGroup = new DoublyLinkedList<>();
 
         Programme programme = new Programme(
                 programmeCode,
@@ -243,11 +242,11 @@ public class ProgrammeDriver {
                 programmeIntake,
                 programmeFee,
                 description,
-                new DoublyLinkedList()
+                tutorialGroup
         );
 
         if (programmeList.add(programme)) {
-            System.out.println("Successfully added the programme - " + programmeCode + " !");
+            System.out.println("Successfully added the programme - " + programmeCode + " !\n");
             System.out.println(programme);
         } else {
             System.out.println("Invalid entry. Please try again !");
@@ -255,6 +254,8 @@ public class ProgrammeDriver {
     }
 
     private static boolean removeProgramme() {
+        programmeIdList();
+
         System.out.print("Please enter the programme code : ");
         String programmeCode = scanner.next();
         programmeCode = programmeCode.toUpperCase();
@@ -265,7 +266,7 @@ public class ProgrammeDriver {
             System.out.print("Are you sure to remove the program : " + programmeCode + " (Y/n) ? ");
             if (scanner.next().toUpperCase().charAt(0) == 'Y') {
                 if (programmeList.remove(programmeToRemove) != null) {
-                    System.out.println("\nSuccessfully removed the program.");
+                    System.out.println("\nSuccessfully removed \"" + programmeToRemove.getProgrammeCode() + "\" program !");
                     return true;
                 }
             }
@@ -285,7 +286,7 @@ public class ProgrammeDriver {
         Programme res = programmeDetails(programmeCode, 1);
 
         if (res != null) {
-            System.out.println("Here's the result...\n\n" + res);
+            System.out.println(res);
             return res;
         } else {
             System.out.println("Programme not found!");
@@ -318,6 +319,8 @@ public class ProgrammeDriver {
     }
 
     private static void amendProgramme(String programmeCode) {
+        programmeIdList();
+
         Programme res = null;
         if (programmeCode == null) {
             res = findProgramme();
@@ -327,14 +330,13 @@ public class ProgrammeDriver {
         }
 
         if (res != null) {
-            System.out.println("Which details to amemd ? (-1 to exit)\n*Programme Code and Name is not allowed to be amended*\n");
+            System.out.println("Which details to amend ? (-1 to exit)\n*Programme Code and Programme Name is not allowed to be amended*\n");
             System.out.println("1. Programme Level");
             System.out.println("2. Department");
             System.out.println("3. Programme Duration");
             System.out.println("4. Programme Intake");
             System.out.println("5. Programme Fee");
-            System.out.println("6. Tutorial Group");
-            System.out.println("7. Programme Description");
+            System.out.println("6. Programme Description");
             System.out.print("\n> ");
 
             int amendOption = scanner.nextInt();
@@ -401,11 +403,6 @@ public class ProgrammeDriver {
                     res.setFee(newFee);
                     break;
                 case 6:
-                    System.out.println(res.getTutorialGroup());
-                    System.out.print("Amended Tutorial Group > ");
-                    // Choose from list
-                    break;
-                case 7:
                     System.out.println(res.getDescription());
                     System.out.print("Amended Programme Description > ");
                     scanner.nextLine();
@@ -413,16 +410,19 @@ public class ProgrammeDriver {
                     System.out.println(res.getDescription() + " -> " + newDescription);
                     res.setDescription(newDescription);
             }
-//            System.out.print("Confirm ? (Y/n) : ");
-//            char option = scanner.next().toUpperCase().charAt(0);
-//            if (option == 'Y') {
-//                System.out.println("Amended.");
-//            } else {
-//                System.out.println("Cancelled operation.");
-//            }
         } else {
             System.out.println("Programme not found!");
         }
+    }
+
+    private static void programmeIdList() {
+        System.out.println("Programme List\n===============");
+        Iterator it = programmeList.getIterator();
+        while (it.hasNext()) {
+            Programme programme = (Programme) it.next();
+            System.out.println(programme.getProgrammeCode());
+        }
+        System.out.println();
     }
 
     private static void listProgramme() {
@@ -557,7 +557,6 @@ public class ProgrammeDriver {
                 TutorialGroup tutorialGroup = (TutorialGroup) tutorialGroupIt.next();
                 if (tutorialGroup.getProgrammeCode().equals(targetProgramme.getProgrammeCode()) && !targetProgramme.getTutorialGroup().contains(tutorialGroup)) {
                     availableTutorialGroup.add(tutorialGroup);
-                    // check contains
                 }
             }
 
@@ -591,7 +590,7 @@ public class ProgrammeDriver {
 
                 updatedGroup.add(targetTutorialGroup);
 
-                System.out.println("Updated successfully!\n");
+                System.out.println("Added tutorial group successfully!\n");
                 System.out.println(updatedGroup);
 
                 System.out.print("Continue adding tutorial group? (Y/n) : ");
