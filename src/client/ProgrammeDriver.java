@@ -4,7 +4,7 @@
  */
 package client;
 
-import adt.DoubleLinkedList;
+import adt.DoublyLinkedList;
 import adt.ListInterface;
 import entity.Programme;
 import entity.TutorialGroup;
@@ -19,13 +19,17 @@ import utility.dummyData;
  */
 public class ProgrammeDriver {
 
-    private static ListInterface<Programme> programmeList = new DoubleLinkedList<>();
+    private static ListInterface<Programme> programmeList = new DoublyLinkedList<>();
+    private static ListInterface<TutorialGroup> tutorialGroupList = new DoublyLinkedList<>();
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         // retrieve existing data
-        programmeList = dummyData.initializeData();
+        programmeList = dummyData.initializeProgrammeData();
+        tutorialGroupList = dummyData.initializeTutorialGroupData();
+
         menu();
+
     }
 
     private static void menu() {
@@ -238,9 +242,8 @@ public class ProgrammeDriver {
                 programmeDuration,
                 programmeIntake,
                 programmeFee,
-                //                new TutorialGroup(),
                 description,
-                new DoubleLinkedList()
+                new DoublyLinkedList()
         );
 
         if (programmeList.add(programme)) {
@@ -294,12 +297,12 @@ public class ProgrammeDriver {
     // Return the found programme
     // Option : 1 = Programme Code, 2 = Programme Name 
     private static Programme programmeDetails(String details, int option) {
+        details = details.toUpperCase();
         Programme result = null;
         boolean found = false;
 
         Iterator it = programmeList.getIterator();
 
-//        System.out.println("\nFinding the programme....\n");
         while (it.hasNext() && !found) {
             result = (Programme) it.next();
             if (option == 1) {
@@ -472,7 +475,7 @@ public class ProgrammeDriver {
                     System.out.println("Programme not found!");
                 }
             } else if (option == 3) {
-                DoubleLinkedList.DoubleLinkedListIterator customIterator = (DoubleLinkedList.DoubleLinkedListIterator) programmeList.getIterator();
+                DoublyLinkedList.DoubleLinkedListIterator customIterator = (DoublyLinkedList.DoubleLinkedListIterator) programmeList.getIterator();
                 Programme programme = (Programme) customIterator.next();
 
                 // If there is no programme, quit listing
@@ -519,20 +522,47 @@ public class ProgrammeDriver {
     }
 
     private static void addGroupToProgramme() {
-        System.out.print("\nWhich programme you are looking for ? \n Programme Code : ");
+        Iterator it = programmeList.getIterator();
+        while (it.hasNext()) {
+            Programme programme = (Programme) it.next();
+            System.out.println(programme.getProgrammeCode());
+        }
+
+        System.out.print("\nWhich programme you are looking for ? \nProgramme Code : ");
         String programmeToAddGroup = scanner.next();
         Programme targetProgramme = programmeDetails(programmeToAddGroup, 1);
 
         // if programme exists
         if (targetProgramme != null) {
-            DoubleLinkedList<TutorialGroup> updatedGroup = targetProgramme.getTutorialGroup();
+            DoublyLinkedList<TutorialGroup> updatedGroup = targetProgramme.getTutorialGroup();
+            System.out.println("\nCurrent Group\n==============\n" + updatedGroup);
 
-            // List out the tutorial groups by retrieving all the tutorial groups using utility function
+            System.out.println("Which tutorial group you would like to add to the programme ?\n");
+            Iterator tutorialGroupIt = tutorialGroupList.getIterator();
+
+            // temporary storing available groups
+            DoublyLinkedList availableTutorialGroup = new DoublyLinkedList<>();
+
+            int option = 0;
+
+            // List out the tutorial groups by retrieving all the tutorial groups using utility function and store available groups into a temporary list 
+            while (tutorialGroupIt.hasNext()) {
+                TutorialGroup tutorialGroup = (TutorialGroup) tutorialGroupIt.next();
+                if (tutorialGroup.getProgrammeCode().equals(targetProgramme.getProgrammeCode())) {
+                    availableTutorialGroup.add(tutorialGroup);
+                }
+            }
+            System.out.println(availableTutorialGroup);
+
             // Choose a tutorial group
-            // Add the tutorial group to programme
-            updatedGroup.add(null);
+            System.out.print("Option (0 to cancel) > ");
+            option = scanner.nextInt();
 
-            targetProgramme.setTutorialGroup(updatedGroup);
+            // Add the tutorial group to programme
+            updatedGroup.add((TutorialGroup) availableTutorialGroup.get(option - 1));
+
+            System.out.println("Updated successfully!");
+            System.out.println(updatedGroup);
         }
     }
 
@@ -542,7 +572,7 @@ public class ProgrammeDriver {
         Programme targetProgramme = programmeDetails(programmeToRemoveGroup, 1);
 
         if (targetProgramme != null) {
-            DoubleLinkedList<TutorialGroup> updatedGroup = targetProgramme.getTutorialGroup();
+            DoublyLinkedList<TutorialGroup> updatedGroup = targetProgramme.getTutorialGroup();
 
             // List out the tutorial groups using the listGroupFromProgramme()
             // Choose a tutorial group
@@ -557,7 +587,7 @@ public class ProgrammeDriver {
         Programme targetProgramme = programmeDetails(programmeForListingGroup, 1);
 
         if (targetProgramme != null) {
-            DoubleLinkedList<TutorialGroup> group = targetProgramme.getTutorialGroup();
+            DoublyLinkedList<TutorialGroup> group = targetProgramme.getTutorialGroup();
             System.out.println(group);
         }
     }

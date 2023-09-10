@@ -12,12 +12,23 @@ import java.util.Iterator;
  *
  * @author yikso
  */
-public class DoubleLinkedList<T extends Comparable<T>> implements ListInterface<T>, Serializable {
+public class DoublyLinkedList<T extends Comparable<T>> implements ListInterface<T>, Serializable {
 
     private Node firstNode;
 
-    public DoubleLinkedList() {
+    public DoublyLinkedList() {
         clear();
+    }
+
+    public T get(int index) {
+        if (index >= 0 && index < getNumberOfEntries()) {
+            Node node = firstNode;
+            for (int i = 0; node != null && i < index; i++) {
+                node = node.next;
+            }
+            return node.data;
+        }
+        return null;
     }
 
     @Override

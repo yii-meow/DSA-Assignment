@@ -4,7 +4,7 @@
  */
 package entity;
 
-import adt.DoubleLinkedList;
+import adt.DoublyLinkedList;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -28,9 +28,9 @@ public class Programme implements Comparable<Programme>, Serializable {
     private String intake;
     private double fee;
     private String description;
-    private DoubleLinkedList<TutorialGroup> tutorialGroup;
+    private DoublyLinkedList<TutorialGroup> tutorialGroup;
 
-    public Programme(String programmeCode, String programmeName, LevelOfStudy programmeLevel, String department, int duration, String intake, double fee, String description, DoubleLinkedList<TutorialGroup> tutorialGroup) {
+    public Programme(String programmeCode, String programmeName, LevelOfStudy programmeLevel, String department, int duration, String intake, double fee, String description, DoublyLinkedList<TutorialGroup> tutorialGroup) {
         this.programmeCode = programmeCode;
         this.programmeName = programmeName;
         this.programmeLevel = programmeLevel;
@@ -98,11 +98,11 @@ public class Programme implements Comparable<Programme>, Serializable {
         this.fee = fee;
     }
 
-    public DoubleLinkedList<TutorialGroup> getTutorialGroup() {
+    public DoublyLinkedList<TutorialGroup> getTutorialGroup() {
         return tutorialGroup;
     }
 
-    public void setTutorialGroup(DoubleLinkedList<TutorialGroup> tutorialGroup) {
+    public void setTutorialGroup(DoublyLinkedList<TutorialGroup> tutorialGroup) {
         this.tutorialGroup = tutorialGroup;
     }
 

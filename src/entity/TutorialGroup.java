@@ -84,12 +84,19 @@ public class TutorialGroup implements Serializable, Comparable<TutorialGroup> {
 
     @Override
     public String toString() {
-        return "programmeCode= " + programmeCode + ", groupNumber=" + groupNumber + ", numberOfStudents=" + numberOfStudents + ", intake=" + intake + '}';
+        return "programmeCode= " + programmeCode + ", groupNumber=" + groupNumber + ", numberOfStudents=" + numberOfStudents + ", intake=" + intake.getIntakeId() + '}';
     }
-
+    
+    // Sort Intake, then group number
     @Override
     public int compareTo(TutorialGroup o) {
-        return this.programmeCode.compareTo(o.programmeCode);
+        int intakeComparison = this.intake.getIntakeId().compareTo(o.intake.getIntakeId());
+
+        if (intakeComparison == 0) {
+            return Integer.compare(this.groupNumber, o.groupNumber);
+        }
+
+        return intakeComparison;
     }
 
 }
