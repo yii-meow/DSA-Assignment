@@ -8,9 +8,11 @@ import adt.DoublyLinkedList;
 import adt.ListInterface;
 import entity.Programme;
 import entity.TutorialGroup;
+import java.time.LocalDateTime;
 import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.Scanner;
+import utility.ReportSummary;
 import utility.dummyData;
 
 /**
@@ -19,27 +21,33 @@ import utility.dummyData;
  */
 public class ProgrammeDriver {
 
-    private static ListInterface<Programme> programmeList = new DoublyLinkedList<>();
-    private static ListInterface<TutorialGroup> tutorialGroupList = new DoublyLinkedList<>();
-    static Scanner scanner = new Scanner(System.in);
+    private ListInterface<Programme> programmeList = new DoublyLinkedList<>();
+    private ListInterface<TutorialGroup> tutorialGroupList = new DoublyLinkedList<>();
+    Scanner scanner = new Scanner(System.in);
+    private ReportSummary reportSummary = new ReportSummary();
 
     public static void main(String[] args) {
-        initializeData();
-        menu();
-        writeNewData();
+        ProgrammeDriver driver = new ProgrammeDriver();
+        driver.initializeData();
+        driver.menu();
+        driver.writeNewData();
+        driver.generateReport();
     }
 
-    public static void initializeData() {
+    public void initializeData() {
+        reportSummary.setStartTime(LocalDateTime.now());
+
         // retrieve existing data
         programmeList = dummyData.initializeProgrammeData();
         tutorialGroupList = dummyData.initializeTutorialGroupData();
     }
 
-    public static void writeNewData() {
+    public void writeNewData() {
         dummyData.writeDataToFile(programmeList);
+        reportSummary.setEndTime(LocalDateTime.now());
     }
 
-    private static void menu() {
+    private void menu() {
         int choice = 0;
 
         do {
@@ -104,7 +112,7 @@ public class ProgrammeDriver {
         scanner.close();
     }
 
-    private static void addProgramme() {
+    private void addProgramme() {
         // variable for validation
         boolean isValid = false;
 
@@ -258,7 +266,7 @@ public class ProgrammeDriver {
     }
 
     // return true if successfully removed the programme
-    private static boolean removeProgramme() {
+    private boolean removeProgramme() {
         programmeIdList();
 
         System.out.print("Please enter the programme code : ");
@@ -282,7 +290,7 @@ public class ProgrammeDriver {
     }
 
     // Find the programme, and return the result
-    private static Programme findProgramme(String programmeCode) {
+    private Programme findProgramme(String programmeCode) {
         if (programmeCode == null) {
             System.out.print("Please enter the programme code : ");
             programmeCode = scanner.next();
@@ -297,9 +305,9 @@ public class ProgrammeDriver {
         }
     }
 
-    // Return the found programme
+    // Return the found programme based on programme code or programme name
     // Option : 1 = Programme Code, 2 = Programme Name 
-    private static Programme programmeDetails(String details, int option) {
+    private Programme programmeDetails(String details, int option) {
         details = details.toUpperCase();
         Programme result = null;
         boolean found = false;
@@ -323,7 +331,7 @@ public class ProgrammeDriver {
         return null;
     }
 
-    private static void amendProgramme(String programmeCode) {
+    private void amendProgramme(String programmeCode) {
         programmeIdList();
 
         Programme res = null;
@@ -421,7 +429,7 @@ public class ProgrammeDriver {
     }
 
     // Display all the progrmame Id
-    private static void programmeIdList() {
+    private void programmeIdList() {
         System.out.println("\nProgramme List\n===============");
         Iterator it = programmeList.getIterator();
         while (it.hasNext()) {
@@ -432,7 +440,7 @@ public class ProgrammeDriver {
     }
 
     // List Program - 1. Overview, 2. Specific, 3. One-By-One (can go to previous & next)
-    private static void listProgramme() {
+    private void listProgramme() {
         int option = 0;
 
         do {
@@ -499,7 +507,7 @@ public class ProgrammeDriver {
                     }
 
                     System.out.println(programme);
-                    
+
                     if (customIterator.hasPrevious() && !firstTime) {
                         System.out.print("Previous Programme (P) / ");
                     }
@@ -541,7 +549,7 @@ public class ProgrammeDriver {
         } while (scanner.next().toUpperCase().charAt(0) == 'Y');
     }
 
-    private static void addGroupToProgramme(String programmeCode) {
+    private void addGroupToProgramme(String programmeCode) {
         System.out.println("Adding Tutorial Group to A Programme\n====================================\n");
         Programme targetProgramme = null;
 
@@ -620,7 +628,7 @@ public class ProgrammeDriver {
         }
     }
 
-    private static void removeGroupFromProgramme() {
+    private void removeGroupFromProgramme() {
         System.out.println("Remove Tutorial Group from A Programme\n====================================");
 
         Iterator it = programmeList.getIterator();
@@ -679,7 +687,7 @@ public class ProgrammeDriver {
         }
     }
 
-    private static void listGroupFromProgramme() {
+    private void listGroupFromProgramme() {
         programmeIdList();
 
         System.out.print("Which programme you are looking for ? \nProgramme Code : ");
@@ -703,7 +711,7 @@ public class ProgrammeDriver {
         }
     }
 
-    private static void generateReport() {
-
+    private void generateReport() {
+        System.out.println(reportSummary);
     }
 }
