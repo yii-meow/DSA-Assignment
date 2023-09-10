@@ -87,7 +87,7 @@ public class ProgrammeDriver {
             } catch (NumberFormatException e) {
                 choice = 0;
             }
-            System.out.print("Do you want to continue ? (Y/n) : ");
+            System.out.print("Do you want to continue using this program? (Y/n) : ");
         } while ((choice > 0 && choice <= 9) && scanner.next().toUpperCase().charAt(0) == 'Y');
 
         System.out.println("\nQuiting...\nThank you for using this system.");
