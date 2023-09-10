@@ -187,7 +187,7 @@ public class ProgrammeDriver {
                 programmeDuration = scanner.nextInt();
                 isValid = true;
             } catch (InputMismatchException ex) {
-                System.out.println("Please ensure the duration is a positive whole number");
+                System.out.println("Please ensure the duration is a positive whole number.");
                 scanner.nextLine();
             }
         }
@@ -224,9 +224,9 @@ public class ProgrammeDriver {
         System.out.println("");
 
         // Let user choose from a list
-        System.out.print("Tutorial Group: ");
+//        System.out.print("Tutorial Group: ");
         TutorialGroup tutorialGroup = null;
-        System.out.println("");
+//        System.out.println("");
 
         // Description
         System.out.print("Programme Description: ");
@@ -249,7 +249,6 @@ public class ProgrammeDriver {
         if (programmeList.add(programme)) {
             System.out.println("Successfully added the programme - " + programmeCode + " !");
             System.out.println(programme);
-            System.out.println(programmeList);
         } else {
             System.out.println("Invalid entry. Please try again !");
         }
@@ -537,9 +536,14 @@ public class ProgrammeDriver {
         // if programme exists
         if (targetProgramme != null) {
             DoublyLinkedList<TutorialGroup> updatedGroup = targetProgramme.getTutorialGroup();
-            System.out.println("\nCurrent Tutorial Group\n===================\n" + updatedGroup);
+            System.out.println("\nCurrent Tutorial Group\n===================");
 
-            System.out.println("Which tutorial group you would like to add to the programme ?\n");
+            if (updatedGroup.getNumberOfEntries() != 0) {
+                System.out.println(updatedGroup);
+            } else {
+                System.out.println("No tutorial group has been added so far.");
+            }
+
             Iterator tutorialGroupIt = tutorialGroupList.getIterator();
 
             // temporary storing available groups
@@ -562,6 +566,8 @@ public class ProgrammeDriver {
                     System.out.println("There is no tutorial group available to add...");
                     return;
                 }
+
+                System.out.println("Which tutorial group you would like to add to the programme ?\n");
                 System.out.println(availableTutorialGroup);
 
                 boolean validGroup = false;

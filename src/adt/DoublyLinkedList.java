@@ -154,10 +154,10 @@ public class DoublyLinkedList<T extends Comparable<T>> implements ListInterface<
 
     @Override
     public String toString() {
-        if (isEmpty()) {
-            return "No element.";
+        if (!isEmpty()) {
+            return toString(firstNode, 1);
         }
-        return toString(firstNode, 1);
+        return "";
     }
 
     public String toString(Node node, int position) {

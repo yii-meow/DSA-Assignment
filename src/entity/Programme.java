@@ -150,10 +150,16 @@ public class Programme implements Comparable<Programme>, Serializable {
 
     @Override
     public String toString() {
+        String tutorialGroupDetails = "No Details";
+
+        if (!tutorialGroup.isEmpty()) {
+            tutorialGroupDetails = tutorialGroup.toString();
+        }
+
         return "Programme Code : " + programmeCode + "\nProgramme Name : " + programmeName
                 + "\nProgramme Level : " + programmeLevel + "\nDepartment : " + department
                 + "\nDuration : " + duration + "\nIntake : " + intake + "\nProgramme Fee : RM " + String.format("%.2f", fee)
-                + "\nProgramme Description : " + description + "\n\nTutorial Group\n" + tutorialGroup;
+                + "\nProgramme Description : " + description + "\n\nTutorial Group\n" + tutorialGroupDetails;
 
     }
 
