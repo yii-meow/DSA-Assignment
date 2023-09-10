@@ -84,7 +84,7 @@ public class TutorialGroup implements Serializable, Comparable<TutorialGroup> {
 
     @Override
     public String toString() {
-        return "programmeCode= " + programmeCode + ", groupNumber=" + groupNumber + ", numberOfStudents=" + numberOfStudents + ", intake=" + intake.getIntakeId() + '}';
+        return "programmeCode= " + programmeCode + ", groupNumber=" + groupNumber + ", numberOfStudents=" + numberOfStudents + ", intake=" + intake.getIntakeId();
     }
     
     // Sort Intake, then group number
