@@ -479,7 +479,6 @@ public class ProgrammeDriver {
                 // One by one, allow checking previous and next programme
                 DoublyLinkedList.DoubleLinkedListIterator customIterator = (DoublyLinkedList.DoubleLinkedListIterator) programmeList.getIterator();
                 Programme programme = (Programme) customIterator.next();
-
                 // If there is no programme, quit listing
                 if (programme == null) {
                     System.out.println("There is no programme available to show");
@@ -488,11 +487,30 @@ public class ProgrammeDriver {
 
                 Character lastChoice = 'N'; // variable to check whether it need to do two step forward or backward
                 Character choice = 'N';
+                boolean firstTime = true; // to avoid 'previous' option for the first data while entering
 
                 while (true) {
                     lastChoice = choice;
+
+                    // If there is no programme, quit listing
+                    if (programme == null) {
+                        System.out.println("There is no programme available to show");
+                        return;
+                    }
+
                     System.out.println(programme);
-                    System.out.print("Next Programme (N) / Previous Programme (P) / Exit (E) > ");
+                    
+                    if (customIterator.hasPrevious() && !firstTime) {
+                        System.out.print("Previous Programme (P) / ");
+                    }
+                    firstTime = false;
+
+                    if (customIterator.hasNext()) {
+                        System.out.print("Next Programme (N) / ");
+                    }
+
+                    System.out.print("Next (E) > ");
+
                     choice = scanner.next().toUpperCase().charAt(0);
 
                     System.out.println("\n--------------------------------------------\n");

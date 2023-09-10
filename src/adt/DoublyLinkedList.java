@@ -187,6 +187,10 @@ public class DoublyLinkedList<T extends Comparable<T>> implements ListInterface<
             return currentNode != null;
         }
 
+        public T getPrevious() {
+            return currentNode.prev.data;
+        }
+
         @Override
         public T next() {
             if (hasNext()) {
