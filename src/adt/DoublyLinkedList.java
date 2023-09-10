@@ -155,7 +155,7 @@ public class DoublyLinkedList<T extends Comparable<T>> implements ListInterface<
     @Override
     public String toString() {
         if (isEmpty()) {
-            return "No programme added so far...";
+            return "No element.";
         }
         return toString(firstNode, 1);
     }

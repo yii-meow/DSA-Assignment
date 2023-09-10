@@ -153,7 +153,7 @@ public class Programme implements Comparable<Programme>, Serializable {
         return "Programme Code : " + programmeCode + "\nProgramme Name : " + programmeName
                 + "\nProgramme Level : " + programmeLevel + "\nDepartment : " + department
                 + "\nDuration : " + duration + "\nIntake : " + intake + "\nProgramme Fee : RM " + String.format("%.2f", fee)
-                + "\n\nTutorial Group : " + tutorialGroup + "\n\nProgramme Description : " + description + "\n";
+                + "\nProgramme Description : " + description + "\n\nTutorial Group\n" + tutorialGroup;
 
     }
 

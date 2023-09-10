@@ -50,7 +50,7 @@ public class ProgrammeDriver {
             System.out.print("Choice: ");
 
             String option = scanner.next();
-            System.out.println("\n");
+            System.out.println();
 
             try {
                 choice = Integer.parseInt(option);
@@ -263,10 +263,10 @@ public class ProgrammeDriver {
         Programme programmeToRemove = programmeDetails(programmeCode, 1);
 
         if (programmeToRemove != null) {
-            System.out.println("Are you sure to remove the program : " + programmeCode + " (Y/n) ? ");
+            System.out.print("Are you sure to remove the program : " + programmeCode + " (Y/n) ? ");
             if (scanner.next().toUpperCase().charAt(0) == 'Y') {
                 if (programmeList.remove(programmeToRemove) != null) {
-                    System.out.println("Successfully removed the program.");
+                    System.out.println("\nSuccessfully removed the program.");
                     return true;
                 }
             }
@@ -522,6 +522,8 @@ public class ProgrammeDriver {
     }
 
     private static void addGroupToProgramme() {
+        System.out.println("Adding Tutorial Group to A Programme\n====================================");
+
         Iterator it = programmeList.getIterator();
         while (it.hasNext()) {
             Programme programme = (Programme) it.next();
@@ -535,7 +537,7 @@ public class ProgrammeDriver {
         // if programme exists
         if (targetProgramme != null) {
             DoublyLinkedList<TutorialGroup> updatedGroup = targetProgramme.getTutorialGroup();
-            System.out.println("\nCurrent Group\n==============\n" + updatedGroup);
+            System.out.println("\nCurrent Tutorial Group\n===================\n" + updatedGroup);
 
             System.out.println("Which tutorial group you would like to add to the programme ?\n");
             Iterator tutorialGroupIt = tutorialGroupList.getIterator();
@@ -546,38 +548,108 @@ public class ProgrammeDriver {
             int option = 0;
 
             // List out the tutorial groups by retrieving all the tutorial groups using utility function and store available groups into a temporary list 
+            // and does not contains in the prrogramme
             while (tutorialGroupIt.hasNext()) {
                 TutorialGroup tutorialGroup = (TutorialGroup) tutorialGroupIt.next();
-                if (tutorialGroup.getProgrammeCode().equals(targetProgramme.getProgrammeCode())) {
+                if (tutorialGroup.getProgrammeCode().equals(targetProgramme.getProgrammeCode()) && !targetProgramme.getTutorialGroup().contains(tutorialGroup)) {
                     availableTutorialGroup.add(tutorialGroup);
+                    // check contains
                 }
             }
-            System.out.println(availableTutorialGroup);
 
-            // Choose a tutorial group
-            System.out.print("Option (0 to cancel) > ");
-            option = scanner.nextInt();
+            do {
+                if (availableTutorialGroup.getNumberOfEntries() == 0) {
+                    System.out.println("There is no tutorial group available to add...");
+                    return;
+                }
+                System.out.println(availableTutorialGroup);
 
-            // Add the tutorial group to programme
-            updatedGroup.add((TutorialGroup) availableTutorialGroup.get(option - 1));
+                boolean validGroup = false;
+                // Choose a tutorial group and do validation
+                do {
+                    System.out.print("Option (0 to cancel) > ");
+                    option = scanner.nextInt();
 
-            System.out.println("Updated successfully!");
-            System.out.println(updatedGroup);
+                    if (option > 0 && option <= availableTutorialGroup.getNumberOfEntries()) {
+                        validGroup = true;
+                    } else if (option == 0) {
+                        System.out.println("Back to the menu...");
+                        return;
+                    } else {
+                        System.out.println("This option is not available! Please choose again.");
+                    }
+                } while (!validGroup);
+
+                // Add the tutorial group to programme (index minus by one)
+                TutorialGroup targetTutorialGroup = (TutorialGroup) availableTutorialGroup.get(option - 1);
+
+                updatedGroup.add(targetTutorialGroup);
+
+                System.out.println("Updated successfully!\n");
+                System.out.println(updatedGroup);
+
+                System.out.print("Continue adding tutorial group? (Y/n) : ");
+                availableTutorialGroup.remove(targetTutorialGroup);
+            } while (scanner.next().toUpperCase().charAt(0) == 'Y');
         }
     }
 
     private static void removeGroupFromProgramme() {
-        System.out.print("\nWhich programme you are looking for ? \n Programme Code : ");
-        String programmeToRemoveGroup = scanner.next();
-        Programme targetProgramme = programmeDetails(programmeToRemoveGroup, 1);
+        System.out.println("Remove Tutorial Group from A Programme\n====================================");
 
+        Iterator it = programmeList.getIterator();
+        while (it.hasNext()) {
+            Programme programme = (Programme) it.next();
+            System.out.println(programme.getProgrammeCode());
+        }
+
+        System.out.print("\nWhich programme you are looking for ? \nProgramme Code : ");
+        String programmeToAddGroup = scanner.next();
+        Programme targetProgramme = programmeDetails(programmeToAddGroup, 1);
+
+        // if programme exists
         if (targetProgramme != null) {
             DoublyLinkedList<TutorialGroup> updatedGroup = targetProgramme.getTutorialGroup();
 
-            // List out the tutorial groups using the listGroupFromProgramme()
-            // Choose a tutorial group
-            // remove the tutorial group to programme
-            updatedGroup.remove(null);
+            int option = 0;
+
+            do {
+                if (updatedGroup.getNumberOfEntries() == 0) {
+                    System.out.println("There is no tutorial group available to remove...");
+                    return;
+                }
+                System.out.println("\nCurrent Tutorial Group\n===================\n" + updatedGroup);
+
+                System.out.println("Which tutorial group you would like to remove from the programme ?\n");
+
+                boolean validGroup = false;
+                // Choose a tutorial group and do validation
+                do {
+                    System.out.print("Option (0 to cancel) > ");
+                    option = scanner.nextInt();
+
+                    if (option > 0 && option <= updatedGroup.getNumberOfEntries()) {
+                        validGroup = true;
+                    } else if (option == 0) {
+                        System.out.println("Back to the menu...");
+                        return;
+                    } else {
+                        System.out.println("This option is not available! Please choose again.");
+                    }
+                } while (!validGroup);
+
+                // Add the tutorial group to programme (index minus by one)
+                TutorialGroup targetTutorialGroup = (TutorialGroup) updatedGroup.get(option - 1);
+
+                if (updatedGroup.remove(targetTutorialGroup) != null) {
+                    System.out.println("Removed successfully!\n");
+                    System.out.println(updatedGroup);
+                    System.out.print("Continue removing tutorial group? (Y/n) : ");
+                } else {
+                    System.out.println("Removed unsuccessfully. Please try again.");
+                }
+
+            } while (scanner.next().toUpperCase().charAt(0) == 'Y');
         }
     }
 
