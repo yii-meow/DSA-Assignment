@@ -24,7 +24,7 @@ public class ProgrammeDriver {
 
     public static void main(String[] args) {
         // retrieve existing data
-        programmeList = dummyData.initializeProgrammeData();
+        programmeList = dummyData.initializeData();
         menu();
     }
 
@@ -238,9 +238,9 @@ public class ProgrammeDriver {
                 programmeDuration,
                 programmeIntake,
                 programmeFee,
-                new DoubleLinkedList(),
                 //                new TutorialGroup(),
-                description
+                description,
+                new DoubleLinkedList()
         );
 
         if (programmeList.add(programme)) {
@@ -529,7 +529,7 @@ public class ProgrammeDriver {
 
             // List out the tutorial groups by retrieving all the tutorial groups using utility function
             // Choose a tutorial group
-            // add the tutorial group to programme
+            // Add the tutorial group to programme
             updatedGroup.add(null);
 
             targetProgramme.setTutorialGroup(updatedGroup);

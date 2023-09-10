@@ -6,6 +6,7 @@ package utility;
 
 import adt.DoubleLinkedList;
 import adt.ListInterface;
+import entity.Intake;
 import entity.Programme;
 import entity.TutorialGroup;
 import java.io.BufferedReader;
@@ -18,15 +19,21 @@ import java.io.IOException;
  */
 public class dummyData {
 
-    public static ListInterface<Programme> initializeProgrammeData() {
+    public static ListInterface<Programme> initializeData() {
+        // Load programme data
         try {
             ListInterface<Programme> programme = new DoubleLinkedList<>();
-            programme = readData("programmeData.txt");
+            programme = readProgrammeData("programmeData.txt");
             return programme;
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        // Load Tutorial Group Data
+//        try {
+//            ListInterface<Programme> tutorialGroup = new DoubleLinkedList<>();
+//
+//        }
 //        programme.add(
 //                new Programme(
 //                        "RSD",
@@ -123,7 +130,7 @@ public class dummyData {
         return null;
     }
 
-    public static ListInterface<Programme> readData(String fileName) throws IOException {
+    public static ListInterface<Programme> readProgrammeData(String fileName) throws IOException {
         ListInterface<Programme> programmeList = new DoubleLinkedList<>();
         try ( BufferedReader reader = new BufferedReader(new FileReader("src/utility/" + fileName))) {
             String line;
@@ -131,27 +138,32 @@ public class dummyData {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
                 // valid format
-                if (parts.length == 13) {
-                    Programme programme = new Programme(
-                            parts[0],
-                            parts[1],
-                            Programme.LevelOfStudy.valueOf(parts[2]),
-                            parts[3],
-                            Integer.parseInt(parts[4]),
-                            parts[5],
-                            Double.parseDouble(parts[6]),
-                            null,
-//                            new TutorialGroup(
-//                                    parts[7],
-//                                    Integer.parseInt(parts[8]),
-//                                    Integer.parseInt(parts[9]),
-//                                    Integer.parseInt(parts[10]),
-//                                    Integer.parseInt(parts[11])
-//                            ),
-                            parts[12]
+                Programme programme = new Programme(
+                        parts[0],
+                        parts[1],
+                        Programme.LevelOfStudy.valueOf(parts[2]),
+                        parts[3],
+                        Integer.parseInt(parts[4]),
+                        parts[5],
+                        Double.parseDouble(parts[6]),
+                        parts[7],
+                        new DoubleLinkedList() // initialize tutorial group to be null first, which will add later on
+                );
+
+                for (int i = 8; i < parts.length; i += 6) {
+                    TutorialGroup tutorialGroup = new TutorialGroup(
+                            parts[i],
+                            Integer.parseInt(parts[i + 1]),
+                            Integer.parseInt(parts[i + 2]),
+                            new Intake(
+                                    parts[i + 3],
+                                    parts[i + 4],
+                                    parts[i + 5]
+                            )
                     );
-                    programmeList.add(programme);
-                }
+                    programme.addTutorialGroup(tutorialGroup);
+                };
+                programmeList.add(programme);
             }
         }
         return programmeList;

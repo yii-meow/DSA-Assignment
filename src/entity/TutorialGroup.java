@@ -15,19 +15,25 @@ public class TutorialGroup implements Serializable, Comparable<TutorialGroup> {
     private String programmeCode;
     private int groupNumber;
     private int numberOfStudents;
-    private int yearOfStudy;
-    private int semesterOfStudy;
+    private Intake intake;
 
     public TutorialGroup() {
 
     }
 
-    public TutorialGroup(String programmeCode, int groupNumber, int numberOfStudents, int yearOfStudy, int semesterOfStudy) {
+    public TutorialGroup(String programmeCode, int groupNumber, int numberOfStudents, Intake intake) {
         this.programmeCode = programmeCode;
         this.groupNumber = groupNumber;
         this.numberOfStudents = numberOfStudents;
-        this.yearOfStudy = yearOfStudy;
-        this.semesterOfStudy = semesterOfStudy;
+        this.intake = intake;
+    }
+
+    public Intake getIntake() {
+        return intake;
+    }
+
+    public void setIntake(Intake intake) {
+        this.intake = intake;
     }
 
     public String getProgrammeCode() {
@@ -54,22 +60,6 @@ public class TutorialGroup implements Serializable, Comparable<TutorialGroup> {
         this.numberOfStudents = numberOfStudents;
     }
 
-    public int getYearOfStudy() {
-        return yearOfStudy;
-    }
-
-    public void setYearOfStudy(int yearOfStudy) {
-        this.yearOfStudy = yearOfStudy;
-    }
-
-    public int getSemesterOfStudy() {
-        return semesterOfStudy;
-    }
-
-    public void setSemesterOfStudy(int semesterOfStudy) {
-        this.semesterOfStudy = semesterOfStudy;
-    }
-
     @Override
     public int hashCode() {
         int hash = 5;
@@ -94,12 +84,12 @@ public class TutorialGroup implements Serializable, Comparable<TutorialGroup> {
 
     @Override
     public String toString() {
-        return "Programme: " + programmeCode + "\nTutorial Group Number : " + groupNumber + "\nNumber of Student: " + numberOfStudents + "\nYear of Study: " + yearOfStudy + "\nSemester of Study: " + semesterOfStudy;
+        return "programmeCode= " + programmeCode + ", groupNumber=" + groupNumber + ", numberOfStudents=" + numberOfStudents + ", intake=" + intake + '}';
     }
 
     @Override
     public int compareTo(TutorialGroup o) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.programmeCode.compareTo(o.programmeCode);
     }
 
 }

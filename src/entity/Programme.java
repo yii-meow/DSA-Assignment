@@ -27,10 +27,10 @@ public class Programme implements Comparable<Programme>, Serializable {
     private int duration;
     private String intake;
     private double fee;
-    private DoubleLinkedList<TutorialGroup> tutorialGroup;
     private String description;
+    private DoubleLinkedList<TutorialGroup> tutorialGroup;
 
-    public Programme(String programmeCode, String programmeName, LevelOfStudy programmeLevel, String department, int duration, String intake, double fee, DoubleLinkedList<TutorialGroup> tutorialGroup, String description) {
+    public Programme(String programmeCode, String programmeName, LevelOfStudy programmeLevel, String department, int duration, String intake, double fee, String description, DoubleLinkedList<TutorialGroup> tutorialGroup) {
         this.programmeCode = programmeCode;
         this.programmeName = programmeName;
         this.programmeLevel = programmeLevel;
@@ -112,6 +112,13 @@ public class Programme implements Comparable<Programme>, Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public boolean addTutorialGroup(TutorialGroup tutorialGroup) {
+        if (this.tutorialGroup.add(tutorialGroup)) {
+            return true;
+        }
+        return false;
     }
 
     @Override
