@@ -162,5 +162,4 @@ public class Programme implements Comparable<Programme>, Serializable {
                 + "\nProgramme Description : " + description + "\n\nTutorial Group\n" + tutorialGroupDetails;
 
     }
-
 }
