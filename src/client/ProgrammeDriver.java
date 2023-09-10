@@ -712,6 +712,11 @@ public class ProgrammeDriver {
     }
 
     private void generateReport() {
+        reportSummary.updateActivityLog("123");
+        
         System.out.println(reportSummary);
+
+        System.out.println("1. Summary Report");
+        System.out.println("2. Activity Log");
     }
 }
