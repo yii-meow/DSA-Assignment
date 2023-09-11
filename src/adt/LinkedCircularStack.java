@@ -39,6 +39,7 @@ public class LinkedCircularStack<T> implements StackInterface<T> {
         if (numberOfEntries == 0) {
             lastNode = null;
         } else if (numberOfEntries == 1) {
+            poppedNode = lastNode.data;
             lastNode.next = null;
         } else {
             poppedNode = lastNode.next.data;
@@ -72,7 +73,7 @@ public class LinkedCircularStack<T> implements StackInterface<T> {
 
     @Override
     public String toString() {
-        return "LinkedStack{" + "firstNode=" + lastNode.next.data + ", numberOfEntries=" + numberOfEntries + '}';
+        return "LinkedStack{" + "firstNode=" + lastNode.data + ", numberOfEntries=" + numberOfEntries + '}';
     }
 
     private class Node {

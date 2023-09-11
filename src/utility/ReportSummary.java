@@ -139,15 +139,8 @@ public class ReportSummary {
     }
 
     // Sort Chronologically for activity log
-    public SortedDoublyLinkedList<String> reverse() {
+    public SortedDoublyLinkedList<String> chronologicallyActivityLog() {
         SortedDoublyLinkedList<ActivityLog> log = getActivityLog();
-//
-//        log.add(new ActivityLog("1", "", LocalDateTime.now()));
-//        log.add(new ActivityLog("2", "", LocalDateTime.now()));
-//        log.add(new ActivityLog("3", "", LocalDateTime.now()));
-//        log.add(new ActivityLog("4", "", LocalDateTime.now()));
-
-        System.out.println(log + "\n\n\n");
 
         LinkedCircularStack<ActivityLog> activityLog = new LinkedCircularStack<>();
 
@@ -157,11 +150,9 @@ public class ReportSummary {
             activityLog.push((ActivityLog) it.next());
         }
 
-        System.out.println(activityLog);
-
-//        while (!activityLog.isEmpty() && activityLog != null) {
-//            System.out.println(activityLog.pop() + " !!!");
-//        }
+        while (!activityLog.isEmpty()) {
+            System.out.println(activityLog.pop());
+        }
         return null;
     }
 
@@ -171,7 +162,6 @@ public class ReportSummary {
     }
 
     public void printReportSummary() {
-        reverse();
         String res = getFavouriteProgramme();
 
         String summary = "\nReport Summary\n===============\n" + "Start Time : " + startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
@@ -184,12 +174,7 @@ public class ReportSummary {
 
     public void printActivityLog() {
         System.out.println("Activity Log\n=============");
-
-        Iterator it = getActivityLog().getIterator();
-
-        while (it.hasNext()) {
-            System.out.println(it.next());
-        }
+        chronologicallyActivityLog();
     }
 
     public void filterActivity() {
