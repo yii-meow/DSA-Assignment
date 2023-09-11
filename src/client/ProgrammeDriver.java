@@ -4,7 +4,7 @@
  */
 package client;
 
-import adt.DoublyLinkedList;
+import adt.SortedDoublyLinkedList;
 import adt.ListInterface;
 import entity.Programme;
 import entity.TutorialGroup;
@@ -22,8 +22,8 @@ import utility.report;
  */
 public class ProgrammeDriver {
 
-    private ListInterface<Programme> programmeList = new DoublyLinkedList<>();
-    private ListInterface<TutorialGroup> tutorialGroupList = new DoublyLinkedList<>();
+    private ListInterface<Programme> programmeList = new SortedDoublyLinkedList<>();
+    private ListInterface<TutorialGroup> tutorialGroupList = new SortedDoublyLinkedList<>();
     Scanner scanner = new Scanner(System.in);
     private ReportSummary reportSummary = new ReportSummary();
 
@@ -32,7 +32,6 @@ public class ProgrammeDriver {
         driver.initializeData();
         driver.menu();
         driver.writeNewData();
-        driver.generateReport();
     }
 
     public void initializeData() {
@@ -46,13 +45,14 @@ public class ProgrammeDriver {
     public void writeNewData() {
         dummyData.writeDataToFile(programmeList);
         reportSummary.setEndTime(LocalDateTime.now());
+        scanner.close();
     }
 
     private void menu() {
         int choice = 0;
 
         do {
-            System.out.println("==========================================\n\tProgramme Management\n==========================================");
+            System.out.println("\n==========================================\n\tProgramme Management\n==========================================");
             System.out.println("1. Add a new programme");
             System.out.println("2. Remove a programme");
             System.out.println("3. Find programme");
@@ -244,7 +244,7 @@ public class ProgrammeDriver {
         System.out.println("");
 
         // initialize to be null tutorial group
-        DoublyLinkedList<TutorialGroup> tutorialGroup = new DoublyLinkedList<>();
+        SortedDoublyLinkedList<TutorialGroup> tutorialGroup = new SortedDoublyLinkedList<>();
 
         Programme programme = new Programme(
                 programmeCode,
@@ -300,6 +300,7 @@ public class ProgrammeDriver {
             }
 
             System.out.print("\nPrevious Details\n===============\nOld: ");
+            String reportDetails = "Amended ";
 
             switch (amendOption) {
                 case 1:
@@ -319,6 +320,7 @@ public class ProgrammeDriver {
                             newProgrammeLevel = "MASTER";
                     }
                     System.out.println(res.getProgrammeLevel() + " -> " + newProgrammeLevel);
+                    reportDetails += "programme level : " + res.getProgrammeLevel() + " -> " + newProgrammeLevel;
                     res.setProgrammeLevel(Programme.LevelOfStudy.valueOf(newProgrammeLevel));
                     break;
                 case 2:
@@ -327,6 +329,7 @@ public class ProgrammeDriver {
                     scanner.nextLine();
                     String newDepartment = scanner.nextLine();
                     System.out.println(res.getDepartment() + " -> " + newDepartment);
+                    reportDetails += "department : " + res.getDepartment() + " -> " + newDepartment;
                     res.setDepartment(newDepartment);
                     break;
                 case 3:
@@ -334,6 +337,7 @@ public class ProgrammeDriver {
                     System.out.print("Amended Programme Duration > ");
                     int newDuration = scanner.nextInt();
                     System.out.println(res.getDuration() + " -> " + newDuration);
+                    reportDetails += "duration : " + res.getDuration() + " -> " + newDuration;
                     res.setDuration(newDuration);
                     break;
                 case 4:
@@ -342,6 +346,7 @@ public class ProgrammeDriver {
                     scanner.nextLine();
                     String newIntake = scanner.next();
                     System.out.println(res.getIntake() + " -> " + newIntake);
+                    reportDetails += "intake : " + res.getIntake() + " -> " + newIntake;
                     res.setIntake(newIntake);
                     break;
                 case 5:
@@ -349,6 +354,7 @@ public class ProgrammeDriver {
                     System.out.print("Amended Programme Fee > ");
                     Double newFee = scanner.nextDouble();
                     System.out.println(res.getFee() + " -> " + newFee);
+                    reportDetails += "fee : " + res.getFee() + " -> " + newFee;
                     res.setFee(newFee);
                     break;
                 case 6:
@@ -357,9 +363,10 @@ public class ProgrammeDriver {
                     scanner.nextLine();
                     String newDescription = scanner.nextLine();
                     System.out.println(res.getDescription() + " -> " + newDescription);
+                    reportDetails += "description: " + res.getDescription() + " -> " + newDescription;
                     res.setDescription(newDescription);
             }
-            reportSummary.reportAction(3, "Amended ? " + "for " + res.getProgrammeCode());
+            reportSummary.reportAction(3, reportDetails + " for programme " + res.getProgrammeCode());
         } else {
             System.out.println("Programme not found!");
         }
@@ -489,7 +496,7 @@ public class ProgrammeDriver {
                 }
             } else if (option == 3) {
                 // One by one, allow checking previous and next programme
-                DoublyLinkedList.DoubleLinkedListIterator customIterator = (DoublyLinkedList.DoubleLinkedListIterator) programmeList.getIterator();
+                SortedDoublyLinkedList.DoubleLinkedListIterator customIterator = (SortedDoublyLinkedList.DoubleLinkedListIterator) programmeList.getIterator();
                 Programme programme = (Programme) customIterator.next();
                 // If there is no programme, quit listing
                 if (programme == null) {
@@ -568,7 +575,7 @@ public class ProgrammeDriver {
 
         // if programme exists
         if (targetProgramme != null) {
-            DoublyLinkedList<TutorialGroup> updatedGroup = targetProgramme.getTutorialGroup();
+            SortedDoublyLinkedList<TutorialGroup> updatedGroup = targetProgramme.getTutorialGroup();
             System.out.println("\nCurrent Tutorial Group\n=====================");
 
             if (updatedGroup.getNumberOfEntries() != 0) {
@@ -580,7 +587,7 @@ public class ProgrammeDriver {
             Iterator tutorialGroupIt = tutorialGroupList.getIterator();
 
             // temporary storing available groups
-            DoublyLinkedList availableTutorialGroup = new DoublyLinkedList<>();
+            SortedDoublyLinkedList availableTutorialGroup = new SortedDoublyLinkedList<>();
 
             int option = 0;
 
@@ -648,7 +655,7 @@ public class ProgrammeDriver {
 
         // if programme exists
         if (targetProgramme != null) {
-            DoublyLinkedList<TutorialGroup> updatedGroup = targetProgramme.getTutorialGroup();
+            SortedDoublyLinkedList<TutorialGroup> updatedGroup = targetProgramme.getTutorialGroup();
 
             int option = 0;
 
@@ -701,7 +708,7 @@ public class ProgrammeDriver {
         System.out.println("");
 
         if (targetProgramme != null) {
-            DoublyLinkedList<TutorialGroup> group = targetProgramme.getTutorialGroup();
+            SortedDoublyLinkedList<TutorialGroup> group = targetProgramme.getTutorialGroup();
             if (!group.isEmpty()) {
                 System.out.println(group);
             } else {
@@ -719,9 +726,45 @@ public class ProgrammeDriver {
     private void generateReport() {
         reportSummary.addActivityLog("Generate Report.");
 
-        System.out.println("1. Summary Report");
-        System.out.println("2. Activity Log");
+        do {
+            System.out.println("\n1. Report Summary");
+            System.out.println("2. Filter activity");
+            System.out.print("3. Activity Log\n\n> ");
 
-        System.out.println(reportSummary);
+            int option = scanner.nextInt();
+            System.out.println("");
+
+            switch (option) {
+                // report summary
+                case 1:
+                    reportSummary.printReportSummary();
+                    break;
+                // filter acitities
+                case 2:
+                    System.out.println("Which activity you would like to filter ?\n");
+                    System.out.println("1. Programme Insertion\n2. Programme Deletion\n3. Programme Amendation\n4. Tutorial Group Insertion\n5. Tutorial Group Deletion\n\n> ");
+                    int filterChoice = scanner.nextInt();
+
+                    switch (filterChoice) {
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
+                        case 5:
+                        default:
+                            break;
+                    }
+
+                    break;
+                // activity logs
+                case 3:
+                    System.out.println("Activity Log\n=============");
+                    reportSummary.printActivityLog();
+                    break;
+                default:
+                    break;
+            }
+            System.out.print("\nContinue viewing report ? (Y/n) : ");
+        } while (scanner.next().toUpperCase().charAt(0) == 'Y');
     }
 }

@@ -4,10 +4,11 @@
  */
 package utility;
 
-import adt.DoublyLinkedList;
+import adt.SortedDoublyLinkedList;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -19,7 +20,7 @@ public class ReportSummary {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
-    DoublyLinkedList<String> activityLog = new DoublyLinkedList<>();
+    SortedDoublyLinkedList<String> activityLog = new SortedDoublyLinkedList<>();
 
     private int programmeInsertion;
     private int programmeRemoval;
@@ -48,11 +49,11 @@ public class ReportSummary {
         return duration;
     }
 
-    public DoublyLinkedList<String> getActivityLog() {
+    public SortedDoublyLinkedList<String> getActivityLog() {
         return activityLog;
     }
 
-    public void setActivityLog(DoublyLinkedList<String> activityLog) {
+    public void setActivityLog(SortedDoublyLinkedList<String> activityLog) {
         this.activityLog = activityLog;
     }
 
@@ -127,18 +128,52 @@ public class ReportSummary {
         addActivityLog(details);
     }
 
+    // Not able to reverse as my doublyLinkedList involve sorting, need to implement other adt
+//    public static SortedDoublyLinkedList<String> reverse(SortedDoublyLinkedList<String> log) {
+//        SortedDoublyLinkedList<String> reversed = new SortedDoublyLinkedList<>();
+//        SortedDoublyLinkedList.DoubleLinkedListIterator customIterator = (SortedDoublyLinkedList.DoubleLinkedListIterator) log.getIterator();
+//
+//        while (customIterator.hasNext()) {
+//            String res = (String) customIterator.next();
+//        }
+//
+//        ArrayList<String> res2 = new ArrayList<>();
+//
+//        System.out.println("Res");
+//        while (customIterator.hasPrevious()) {
+//            String res = (String) customIterator.previous();
+//            System.out.println(res);
+//            reversed.add(res);
+//            res2.add(res);
+//        }
+//
+//        System.out.println("\n\n" + reversed.get(0));
+//        System.out.println("\n\n" + res2.get(0));
+//
+//        return reversed;
+//    }
     @Override
     public String toString() {
+//        System.out.println(reverse(getActivityLog()));
+
+        return "";
+    }
+
+    public void printReportSummary() {
+        String summary = "\nReport Summary\n===============\n" + "Start Time : " + startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                + "\nTotal time spent in this program: " + calculateDuration().getSeconds() + "s.\n\n" + "- Programme Action(s) -\nProgramme Insertion (+) : " + getProgrammeInsertion()
+                + "\nProgramme Deletion  (-) : " + getProgrammeRemoval() + "\nProgramme Amended   (*) : " + getProgrammeAmended() + "\n\n- Programme : Tutorial Group Action(s) -\n"
+                + "Tutorial Group Insertion (+) : " + getGroupInsertion() + "\nTutorial Group Deletion  (-) : " + getGroupRemoval();
+
+        System.out.println(summary);
+    }
+
+    public void printActivityLog() {
         Iterator it = getActivityLog().getIterator();
 
         while (it.hasNext()) {
             System.out.println(it.next());
         }
-
-        return "\nReport Summary\n===============\n" + "Start Time : " + startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-                + "\nTotal time spent in this program: " + calculateDuration().getSeconds() + "s.\n\n" + "Programme Action(s)\nProgramme Insertion (+) : " + getProgrammeInsertion()
-                + "\nProgramme Deletion (-) : " + getProgrammeRemoval() + "\nProgramme Amended (*) : " + getProgrammeAmended() + "Programme - Tutorial Group Action(s)\n"
-                + "Tutorial Group Insertion (+) : " + getGroupInsertion() + "\nTutorial Group Deletion (-) : " + getGroupRemoval();
     }
 
 }

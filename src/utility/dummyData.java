@@ -4,7 +4,7 @@
  */
 package utility;
 
-import adt.DoublyLinkedList;
+import adt.SortedDoublyLinkedList;
 import adt.ListInterface;
 import entity.Intake;
 import entity.Programme;
@@ -26,7 +26,7 @@ public class dummyData {
     public static ListInterface<Programme> initializeProgrammeData() {
         // Load programme data
         try {
-            ListInterface<Programme> programme = new DoublyLinkedList<>();
+            ListInterface<Programme> programme = new SortedDoublyLinkedList<>();
             programme = readProgrammeData("programme_data.txt");
             return programme;
         } catch (IOException e) {
@@ -38,7 +38,7 @@ public class dummyData {
     public static ListInterface<TutorialGroup> initializeTutorialGroupData() {
         // Load Tutorial Group Data
         try {
-            ListInterface<TutorialGroup> tutorialGroup = new DoublyLinkedList<>();
+            ListInterface<TutorialGroup> tutorialGroup = new SortedDoublyLinkedList<>();
             tutorialGroup = readTutorialGroupData("tutorialGroupData.txt");
             return tutorialGroup;
         } catch (IOException e) {
@@ -48,7 +48,7 @@ public class dummyData {
     }
 
     public static ListInterface<Programme> readProgrammeData(String fileName) throws IOException {
-        ListInterface<Programme> programmeList = new DoublyLinkedList<>();
+        ListInterface<Programme> programmeList = new SortedDoublyLinkedList<>();
         try ( BufferedReader reader = new BufferedReader(new FileReader("src/utility/" + fileName))) {
             String line;
 
@@ -64,7 +64,7 @@ public class dummyData {
                         parts[5],
                         Double.parseDouble(parts[6]),
                         parts[7],
-                        new DoublyLinkedList() // initialize tutorial group to be null first, which will add later on
+                        new SortedDoublyLinkedList() // initialize tutorial group to be null first, which will add later on
                 );
 
                 for (int i = 8; i < parts.length; i += 6) {
@@ -87,7 +87,7 @@ public class dummyData {
     }
 
     public static ListInterface<TutorialGroup> readTutorialGroupData(String fileName) throws IOException {
-        ListInterface<TutorialGroup> tutorialGroupList = new DoublyLinkedList<>();
+        ListInterface<TutorialGroup> tutorialGroupList = new SortedDoublyLinkedList<>();
         try ( BufferedReader reader = new BufferedReader(new FileReader("src/utility/" + fileName))) {
             String line;
 

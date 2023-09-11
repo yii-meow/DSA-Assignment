@@ -12,11 +12,11 @@ import java.util.Iterator;
  *
  * @author yikso
  */
-public class DoublyLinkedList<T extends Comparable<T>> implements ListInterface<T>, Serializable {
+public class SortedDoublyLinkedList<T extends Comparable<T>> implements ListInterface<T>, Serializable {
 
     private Node firstNode;
 
-    public DoublyLinkedList() {
+    public SortedDoublyLinkedList() {
         clear();
     }
 
