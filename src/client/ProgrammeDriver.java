@@ -403,9 +403,9 @@ public class ProgrammeDriver {
             programmeCode = scanner.next();
         }
         Programme res = programmeDetails(programmeCode, 1);
-        reportSummary.addListOfSearchedProgramme(programmeCode);
 
         if (res != null) {
+            reportSummary.addListOfSearchedProgramme(programmeCode);
             return res;
         } else {
             return null;

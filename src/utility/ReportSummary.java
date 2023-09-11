@@ -169,8 +169,10 @@ public class ReportSummary {
     }
 
     public void printReportSummary() {
+        String res = getFavouriteProgramme();
+
         String summary = "\nReport Summary\n===============\n" + "Start Time : " + startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-                + "\nTotal time spent in this program: " + calculateDuration().getSeconds() + "s.\n\nMost Favourite Programme based on your search: ?\n\n" + "- Programme Action(s) -\nProgramme Insertion (+) : " + getProgrammeInsertion()
+                + "\nTotal time spent in this program: " + calculateDuration().getSeconds() + "s.\n\nMost Favourite Programme based on your search: " + res + "\n\n- Programme Action(s) -\nProgramme Insertion (+) : " + getProgrammeInsertion()
                 + "\nProgramme Deletion  (-) : " + getProgrammeRemoval() + "\nProgramme Amended   (*) : " + getProgrammeAmended() + "\n\n- Programme : Tutorial Group Action(s) -\n"
                 + "Tutorial Group Insertion (+) : " + getGroupInsertion() + "\nTutorial Group Deletion  (-) : " + getGroupRemoval();
 
@@ -245,8 +247,33 @@ public class ReportSummary {
     }
 
     public String getFavouriteProgramme() {
-        System.out.println(getListOfSearchedProgramme());
+        if (listOfSearchedProgramme.isEmpty()) {
+            return "No result.";
+        }
 
-        return "";
+        Iterator it = listOfSearchedProgramme.getIterator();
+
+        String highestFrequencyProgrammeCode = "";
+        int highestFrequency = 0;
+
+        String currrentProgrammeCode = (String) it.next();
+        int count = 1;
+
+        while (it.hasNext()) {
+            String code = (String) it.next();
+
+            if (currrentProgrammeCode.equals(code)) {
+                count += 1;
+            } else {
+                // No more for this programme, and update highest frequency if this exceeds
+                if (count > highestFrequency) {
+                    highestFrequency = count;
+                    highestFrequencyProgrammeCode = currrentProgrammeCode;
+                }
+                currrentProgrammeCode = code;
+                count = 1;
+            }
+        }
+        return highestFrequencyProgrammeCode + " (" + highestFrequency + " times)";
     }
 }
