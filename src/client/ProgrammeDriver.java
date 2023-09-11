@@ -14,7 +14,6 @@ import java.util.Iterator;
 import java.util.Scanner;
 import utility.ReportSummary;
 import utility.dummyData;
-import utility.report;
 
 /**
  *
@@ -197,7 +196,7 @@ public class ProgrammeDriver {
 
         while (!isValid) {
             try {
-                System.out.print("Duration (in year): ");
+                System.out.print("Duration (in months): ");
                 programmeDuration = scanner.nextInt();
                 isValid = true;
             } catch (InputMismatchException ex) {
@@ -403,8 +402,8 @@ public class ProgrammeDriver {
             System.out.print("Please enter the programme code : ");
             programmeCode = scanner.next();
         }
-
         Programme res = programmeDetails(programmeCode, 1);
+        reportSummary.addListOfSearchedProgramme(programmeCode);
 
         if (res != null) {
             return res;
@@ -528,7 +527,7 @@ public class ProgrammeDriver {
                         System.out.print("Next Programme (N) / ");
                     }
 
-                    System.out.print("Next (E) > ");
+                    System.out.print("Exit (E) > ");
 
                     choice = scanner.next().toUpperCase().charAt(0);
 
@@ -630,7 +629,7 @@ public class ProgrammeDriver {
 
                 updatedGroup.add(targetTutorialGroup);
 
-                System.out.println("\nAdded tutorial group successfully!\nUpdated Tutorial Group\n");
+                System.out.println("\nAdded tutorial group successfully!\n\nUpdated Tutorial Group");
                 System.out.println(updatedGroup);
                 reportSummary.reportAction(4, "Added tutorial group " + targetTutorialGroup.getGroupNumber() + " to " + targetTutorialGroup.getProgrammeCode() + " (" + targetTutorialGroup.getIntake().getIntakeId() + ")");
 
@@ -684,13 +683,14 @@ public class ProgrammeDriver {
                     }
                 } while (!validGroup);
 
-                // Add the tutorial group to programme (index minus by one)
+                // Remove the tutorial group from programme (index minus by one)
                 TutorialGroup targetTutorialGroup = (TutorialGroup) updatedGroup.get(option - 1);
 
                 if (updatedGroup.remove(targetTutorialGroup) != null) {
                     System.out.println("Removed successfully!\n");
                     System.out.println(updatedGroup);
                     System.out.print("Continue removing tutorial group? (Y/n) : ");
+                    reportSummary.reportAction(5, "Removed tutorial group " + targetTutorialGroup.getGroupNumber() + " from " + targetTutorialGroup.getProgrammeCode() + " (" + targetTutorialGroup.getIntake().getIntakeId() + ")");
                 } else {
                     System.out.println("Removed unsuccessfully. Please try again.");
                 }
@@ -724,12 +724,12 @@ public class ProgrammeDriver {
     }
 
     private void generateReport() {
-        reportSummary.addActivityLog("Generate Report.");
+        reportSummary.addActivityLog("Generate Report.", "Report");
 
         do {
             System.out.println("\n1. Report Summary");
-            System.out.println("2. Filter activity");
-            System.out.print("3. Activity Log\n\n> ");
+            System.out.println("2. Filter activities");
+            System.out.print("3. All Activity Log\n(0 to exit)\n\n> ");
 
             int option = scanner.nextInt();
             System.out.println("");
@@ -741,26 +741,11 @@ public class ProgrammeDriver {
                     break;
                 // filter acitities
                 case 2:
-                    System.out.println("Which activity you would like to filter ?\n");
-                    System.out.println("1. Programme Insertion\n2. Programme Deletion\n3. Programme Amendation\n4. Tutorial Group Insertion\n5. Tutorial Group Deletion\n\n> ");
-                    int filterChoice = scanner.nextInt();
-
-                    switch (filterChoice) {
-                        case 1:
-                        case 2:
-                        case 3:
-                        case 4:
-                        case 5:
-                        default:
-                            break;
-                    }
-
+                    reportSummary.filterActivity();
                     break;
                 // activity logs
                 case 3:
-                    System.out.println("Activity Log\n=============");
                     reportSummary.printActivityLog();
-                    break;
                 default:
                     break;
             }

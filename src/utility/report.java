@@ -3,9 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package utility;
-
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -13,8 +11,8 @@ import java.time.format.DateTimeFormatter;
  */
 public class report {
 
-    public static String convertDataToLog(String action) {
-        String log = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + ": " + action;
+    public static ActivityLog convertDataToLog(String action, String type) {
+        ActivityLog log = new ActivityLog(action, type, LocalDateTime.now());
         return log;
     }
 }
