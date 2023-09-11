@@ -15,48 +15,130 @@ import java.util.Iterator;
  * @author yikso
  */
 public class ReportSummary {
-    
+
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    
+
     DoublyLinkedList<String> activityLog = new DoublyLinkedList<>();
-    
+
+    private int programmeInsertion;
+    private int programmeRemoval;
+    private int programmeAmended;
+    private int groupInsertion;
+    private int groupRemoval;
+
     public LocalDateTime getStartTime() {
         return startTime;
     }
-    
+
     public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
-    
+
     public LocalDateTime getEndTime() {
         return endTime;
     }
-    
+
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
-    
+
     public Duration calculateDuration() {
         Duration duration = Duration.between(getStartTime(), LocalDateTime.now());
         return duration;
     }
-    
-    public void updateActivityLog(String action) {
-        String log = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + ": " + action;
-        activityLog.add(log);
+
+    public DoublyLinkedList<String> getActivityLog() {
+        return activityLog;
     }
-    
+
+    public void setActivityLog(DoublyLinkedList<String> activityLog) {
+        this.activityLog = activityLog;
+    }
+
+    public int getProgrammeInsertion() {
+        return programmeInsertion;
+    }
+
+    public void setProgrammeInsertion(int programmeInsertion) {
+        this.programmeInsertion = programmeInsertion;
+    }
+
+    public int getProgrammeRemoval() {
+        return programmeRemoval;
+    }
+
+    public void setProgrammeRemoval(int programmeRemoval) {
+        this.programmeRemoval = programmeRemoval;
+    }
+
+    public int getProgrammeAmended() {
+        return programmeAmended;
+    }
+
+    public void setProgrammeAmended(int programmeAmended) {
+        this.programmeAmended = programmeAmended;
+    }
+
+    public int getGroupInsertion() {
+        return groupInsertion;
+    }
+
+    public void setGroupInsertion(int groupInsertion) {
+        this.groupInsertion = groupInsertion;
+    }
+
+    public int getGroupRemoval() {
+        return groupRemoval;
+    }
+
+    public void setGroupRemoval(int groupRemoval) {
+        this.groupRemoval = groupRemoval;
+    }
+
+    public void addActivityLog(String log) {
+        activityLog.add(report.convertDataToLog(log));
+    }
+
+    public void reportAction(int option, String details) {
+        switch (option) {
+            // programme insertion
+            case 1:
+                setProgrammeInsertion(getProgrammeInsertion() + 1);
+                break;
+            // programme removal
+            case 2:
+                setProgrammeRemoval(getProgrammeRemoval() + 1);
+                break;
+            // programme ammended
+            case 3:
+                setProgrammeAmended(getProgrammeAmended() + 1);
+                break;
+            // Tutorial Group Insertion
+            case 4:
+                setGroupInsertion(getGroupInsertion() + 1);
+                break;
+            // Tutorial Group Deletion
+            case 5:
+                setGroupRemoval(getGroupRemoval() + 1);
+                break;
+
+        }
+        addActivityLog(details);
+    }
+
     @Override
     public String toString() {
-        Iterator it = activityLog.getIterator();
-        
+        Iterator it = getActivityLog().getIterator();
+
         while (it.hasNext()) {
             System.out.println(it.next());
         }
-        
+
         return "\nReport Summary\n===============\n" + "Start Time : " + startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-                + "\nTotal time spent in this program: " + calculateDuration().getSeconds() + "s.";
+                + "\nTotal time spent in this program: " + calculateDuration().getSeconds() + "s.\n\n" + "Programme Action(s)\nProgramme Insertion (+) : " + getProgrammeInsertion()
+                + "\nProgramme Deletion (-) : " + getProgrammeRemoval() + "\nProgramme Amended (*) : " + getProgrammeAmended() + "Programme - Tutorial Group Action(s)\n"
+                + "Tutorial Group Insertion (+) : " + getGroupInsertion() + "\nTutorial Group Deletion (-) : " + getGroupRemoval();
     }
-    
+
 }

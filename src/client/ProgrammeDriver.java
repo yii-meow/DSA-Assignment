@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.Scanner;
 import utility.ReportSummary;
 import utility.dummyData;
+import utility.report;
 
 /**
  *
@@ -260,75 +261,10 @@ public class ProgrammeDriver {
         if (programmeList.add(programme)) {
             System.out.println("Successfully added the programme - " + programmeCode + " !\n");
             System.out.println(programme);
+            reportSummary.reportAction(1, "Added programme - " + programmeCode);
         } else {
             System.out.println("Invalid entry. Please try again !");
         }
-    }
-
-    // return true if successfully removed the programme
-    private boolean removeProgramme() {
-        programmeIdList();
-
-        System.out.print("Please enter the programme code : ");
-        String programmeCode = scanner.next();
-
-        Programme programmeToRemove = programmeDetails(programmeCode, 1);
-
-        if (programmeToRemove != null) {
-            System.out.print("Are you sure to remove the program : " + programmeCode + " (Y/n) ? ");
-            if (scanner.next().toUpperCase().charAt(0) == 'Y') {
-                if (programmeList.remove(programmeToRemove) != null) {
-                    System.out.println("\nSuccessfully removed \"" + programmeToRemove.getProgrammeCode() + "\" program !");
-                    return true;
-                }
-            }
-        } else {
-            System.out.println("The program code - " + programmeCode + " does not exists.");
-        }
-
-        return false;
-    }
-
-    // Find the programme, and return the result
-    private Programme findProgramme(String programmeCode) {
-        if (programmeCode == null) {
-            System.out.print("Please enter the programme code : ");
-            programmeCode = scanner.next();
-        }
-
-        Programme res = programmeDetails(programmeCode, 1);
-
-        if (res != null) {
-            return res;
-        } else {
-            return null;
-        }
-    }
-
-    // Return the found programme based on programme code or programme name
-    // Option : 1 = Programme Code, 2 = Programme Name 
-    private Programme programmeDetails(String details, int option) {
-        details = details.toUpperCase();
-        Programme result = null;
-        boolean found = false;
-
-        Iterator it = programmeList.getIterator();
-
-        while (it.hasNext() && !found) {
-            result = (Programme) it.next();
-            // compare programme code
-            if (option == 1) {
-                if (result.getProgrammeCode().equals(details)) {
-                    return result;
-                }
-            } else {
-                // compare programme name
-                if (result.getProgrammeName().equals(details)) {
-                    return result;
-                }
-            }
-        }
-        return null;
     }
 
     private void amendProgramme(String programmeCode) {
@@ -423,9 +359,77 @@ public class ProgrammeDriver {
                     System.out.println(res.getDescription() + " -> " + newDescription);
                     res.setDescription(newDescription);
             }
+            reportSummary.reportAction(3, "Amended ? " + "for " + res.getProgrammeCode());
         } else {
             System.out.println("Programme not found!");
         }
+    }
+
+    // return true if successfully removed the programme
+    private boolean removeProgramme() {
+        programmeIdList();
+
+        System.out.print("Please enter the programme code : ");
+        String programmeCode = scanner.next();
+
+        Programme programmeToRemove = programmeDetails(programmeCode, 1);
+
+        if (programmeToRemove != null) {
+            System.out.print("Are you sure to remove the program : " + programmeCode + " (Y/n) ? ");
+            if (scanner.next().toUpperCase().charAt(0) == 'Y') {
+                if (programmeList.remove(programmeToRemove) != null) {
+                    System.out.println("\nSuccessfully removed \"" + programmeToRemove.getProgrammeCode() + "\" program !");
+                    reportSummary.reportAction(2, "Removed " + programmeToRemove.getProgrammeCode());
+                    return true;
+                }
+            }
+        } else {
+            System.out.println("The program code - " + programmeCode + " does not exists.");
+        }
+
+        return false;
+    }
+
+    // Find the programme, and return the result
+    private Programme findProgramme(String programmeCode) {
+        if (programmeCode == null) {
+            System.out.print("Please enter the programme code : ");
+            programmeCode = scanner.next();
+        }
+
+        Programme res = programmeDetails(programmeCode, 1);
+
+        if (res != null) {
+            return res;
+        } else {
+            return null;
+        }
+    }
+
+    // Return the found programme based on programme code or programme name
+    // Option : 1 = Programme Code, 2 = Programme Name 
+    private Programme programmeDetails(String details, int option) {
+        details = details.toUpperCase();
+        Programme result = null;
+        boolean found = false;
+
+        Iterator it = programmeList.getIterator();
+
+        while (it.hasNext() && !found) {
+            result = (Programme) it.next();
+            // compare programme code
+            if (option == 1) {
+                if (result.getProgrammeCode().equals(details)) {
+                    return result;
+                }
+            } else {
+                // compare programme name
+                if (result.getProgrammeName().equals(details)) {
+                    return result;
+                }
+            }
+        }
+        return null;
     }
 
     // Display all the progrmame Id
@@ -621,6 +625,7 @@ public class ProgrammeDriver {
 
                 System.out.println("\nAdded tutorial group successfully!\nUpdated Tutorial Group\n");
                 System.out.println(updatedGroup);
+                reportSummary.reportAction(4, "Added tutorial group " + targetTutorialGroup.getGroupNumber() + " to " + targetTutorialGroup.getProgrammeCode() + " (" + targetTutorialGroup.getIntake().getIntakeId() + ")");
 
                 System.out.print("Continue adding tutorial group? (Y/n) : ");
                 availableTutorialGroup.remove(targetTutorialGroup);
@@ -712,11 +717,11 @@ public class ProgrammeDriver {
     }
 
     private void generateReport() {
-        reportSummary.updateActivityLog("123");
-        
-        System.out.println(reportSummary);
+        reportSummary.addActivityLog("Generate Report.");
 
         System.out.println("1. Summary Report");
         System.out.println("2. Activity Log");
+
+        System.out.println(reportSummary);
     }
 }

@@ -4,13 +4,17 @@
  */
 package utility;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 /**
  *
  * @author yikso
  */
 public class report {
 
-    public static void printStartTime() {
-        System.out.println(System.currentTimeMillis());
+    public static String convertDataToLog(String action) {
+        String log = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + ": " + action;
+        return log;
     }
 }
