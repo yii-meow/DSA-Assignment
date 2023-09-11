@@ -76,7 +76,12 @@ public class ProgrammeDriver {
                         removeProgramme();
                         break;
                     case 3:
-                        System.out.println(findProgramme(null));
+                        Programme programmeToFind = findProgramme(null);
+                        if (programmeToFind == null) {
+                            System.out.println("Programme not found.");
+                        } else {
+                            System.out.println(programmeToFind);
+                        }
                         break;
                     case 4:
                         amendProgramme(null);
@@ -373,7 +378,9 @@ public class ProgrammeDriver {
 
     // return true if successfully removed the programme
     private boolean removeProgramme() {
-        programmeIdList();
+        if (!programmeIdList()) {
+            return false;
+        }
 
         System.out.print("Please enter the programme code : ");
         String programmeCode = scanner.next();
@@ -439,7 +446,12 @@ public class ProgrammeDriver {
     }
 
     // Display all the progrmame Id
-    private void programmeIdList() {
+    private boolean programmeIdList() {
+        if (programmeList.isEmpty()) {
+            System.out.println("No programme to list");
+            return false;
+        }
+
         System.out.println("\nProgramme List\n===============");
         Iterator it = programmeList.getIterator();
         while (it.hasNext()) {
@@ -447,6 +459,7 @@ public class ProgrammeDriver {
             System.out.println(programme.getProgrammeCode());
         }
         System.out.println();
+        return true;
     }
 
     // List Program - 1. Overview, 2. Specific, 3. One-By-One (can go to previous & next)

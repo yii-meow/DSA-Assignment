@@ -22,6 +22,10 @@ public class SortedDoublyLinkedList<T extends Comparable<T>> implements ListInte
 
     @Override
     public T get(int index) {
+        if (isEmpty()) {
+            return null;
+        }
+
         if (index >= 0 && index < getNumberOfEntries()) {
             Node node = firstNode;
             for (int i = 0; node != null && i < index; i++) {
@@ -35,6 +39,10 @@ public class SortedDoublyLinkedList<T extends Comparable<T>> implements ListInte
     @Override
     // Add new node by compareTo for sorting
     public boolean add(T newEntry) {
+        if (newEntry == null) {
+            return false;
+        }
+
         // Create new node
         Node newNode = new Node(newEntry);
 
