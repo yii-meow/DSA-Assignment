@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 /**
  *
- * @author yikso
+ * @author Chong Yik Soon
  */
 public class TutorialGroup implements Serializable, Comparable<TutorialGroup> {
 

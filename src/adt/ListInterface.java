@@ -9,9 +9,11 @@ import java.util.ListIterator;
  */
 /**
  *
- * @author yikso
+ * @author Chong Yik Soon
  */
 public interface ListInterface<T extends Comparable<T>> {
+
+    public T get(int index);
 
     public boolean add(T newEntry);
 
@@ -21,7 +23,8 @@ public interface ListInterface<T extends Comparable<T>> {
 
     public boolean contains(T element);
 
-//    public int getNumberOfEntries(Node node);
+    public int getNumberOfEntries();
+    
     public boolean isEmpty();
 
     public Iterator<T> getIterator();

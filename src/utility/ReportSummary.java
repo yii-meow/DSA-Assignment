@@ -4,6 +4,7 @@
  */
 package utility;
 
+import adt.LinkedCircularStack;
 import adt.SortedDoublyLinkedList;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -13,7 +14,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author yikso
+ * @author Chong Yik Soon
  */
 public class ReportSummary {
 
@@ -137,38 +138,40 @@ public class ReportSummary {
         addActivityLog(details, type);
     }
 
-    // Not able to reverse as my doublyLinkedList involve sorting, need to implement other adt
-//    public static SortedDoublyLinkedList<String> reverse(SortedDoublyLinkedList<String> log) {
-//        SortedDoublyLinkedList<String> reversed = new SortedDoublyLinkedList<>();
-//        SortedDoublyLinkedList.DoubleLinkedListIterator customIterator = (SortedDoublyLinkedList.DoubleLinkedListIterator) log.getIterator();
+    // Sort Chronologically for activity log
+    public SortedDoublyLinkedList<String> reverse() {
+        SortedDoublyLinkedList<ActivityLog> log = getActivityLog();
 //
-//        while (customIterator.hasNext()) {
-//            String res = (String) customIterator.next();
+//        log.add(new ActivityLog("1", "", LocalDateTime.now()));
+//        log.add(new ActivityLog("2", "", LocalDateTime.now()));
+//        log.add(new ActivityLog("3", "", LocalDateTime.now()));
+//        log.add(new ActivityLog("4", "", LocalDateTime.now()));
+
+        System.out.println(log + "\n\n\n");
+
+        LinkedCircularStack<ActivityLog> activityLog = new LinkedCircularStack<>();
+
+        Iterator it = log.getIterator();
+
+        while (it.hasNext()) {
+            activityLog.push((ActivityLog) it.next());
+        }
+
+        System.out.println(activityLog);
+
+//        while (!activityLog.isEmpty() && activityLog != null) {
+//            System.out.println(activityLog.pop() + " !!!");
 //        }
-//
-//        ArrayList<String> res2 = new ArrayList<>();
-//
-//        System.out.println("Res");
-//        while (customIterator.hasPrevious()) {
-//            String res = (String) customIterator.previous();
-//            System.out.println(res);
-//            reversed.add(res);
-//            res2.add(res);
-//        }
-//
-//        System.out.println("\n\n" + reversed.get(0));
-//        System.out.println("\n\n" + res2.get(0));
-//
-//        return reversed;
-//    }
+        return null;
+    }
+
     @Override
     public String toString() {
-//        System.out.println(reverse(getActivityLog()));
-
         return "";
     }
 
     public void printReportSummary() {
+        reverse();
         String res = getFavouriteProgramme();
 
         String summary = "\nReport Summary\n===============\n" + "Start Time : " + startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))

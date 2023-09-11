@@ -8,7 +8,7 @@ import java.util.Objects;
 
 /**
  *
- * @author yikso
+ * @author Chong Yik Soon
  */
 public class Intake {
 

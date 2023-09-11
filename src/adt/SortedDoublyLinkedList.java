@@ -10,7 +10,7 @@ import java.util.Iterator;
 
 /**
  *
- * @author yikso
+ * @author Chong Yik Soon
  */
 public class SortedDoublyLinkedList<T extends Comparable<T>> implements ListInterface<T>, Serializable {
 
@@ -20,6 +20,7 @@ public class SortedDoublyLinkedList<T extends Comparable<T>> implements ListInte
         clear();
     }
 
+    @Override
     public T get(int index) {
         if (index >= 0 && index < getNumberOfEntries()) {
             Node node = firstNode;
@@ -115,12 +116,12 @@ public class SortedDoublyLinkedList<T extends Comparable<T>> implements ListInte
         return false;
     }
 
+    @Override
     // Initialize
     public int getNumberOfEntries() {
         return getNumberOfEntries(firstNode);
     }
 
-//    @Override
     // Recursively loop through every node and get the total number of nodes
     public int getNumberOfEntries(Node node) {
         if (node == null) {
@@ -168,6 +169,7 @@ public class SortedDoublyLinkedList<T extends Comparable<T>> implements ListInte
         }
     }
 
+    @Override
     public Iterator<T> getIterator() {
         return new DoubleLinkedListIterator();
     }

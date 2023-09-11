@@ -17,7 +17,7 @@ import utility.dummyData;
 
 /**
  *
- * @author yikso
+ * @author Chong Yik Soon
  */
 public class ProgrammeDriver {
 

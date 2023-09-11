@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 
 /**
  *
- * @author yikso
+ * @author Chong Yik Soon
  */
 public class ActivityLog implements Comparable<ActivityLog> {
 

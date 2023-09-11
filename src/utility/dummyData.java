@@ -19,7 +19,7 @@ import java.util.Iterator;
 
 /**
  *
- * @author yikso
+ * @author Chong Yik Soon
  */
 public class dummyData {
 
